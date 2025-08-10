@@ -81,8 +81,8 @@ export default function Experience() {
             className="p-6 bg-white/80 backdrop-blur-sm shadow-md rounded-lg transform relative torn-edge-card"
           >
             {/* Highlight Quote Bubble */}
-            <div className="absolute -top-4 right-4 p-3 bg-yellow-100 rounded-full shadow-md transform rotate-3 text-xs font-marker3 text-[#2b2b2b] max-w-xs text-center">
-              "{exp.highlight}"
+            <div className="absolute  -top-10 md:-top-5 lg:-top-4 right-1  md:right-4 p-3 bg-yellow-100 rounded-full shadow-md transform rotate-3 text-xs font-marker3 text-[#2b2b2b] max-w-xs text-center">
+              &quot;{exp.highlight}&quot;
             </div>
 
             <h3 className="text-2xl font-handwritten font-bold text-[#2b2b2b]">

@@ -86,31 +86,45 @@ const AboutMe = () => {
         initial={{ opacity: 0, scale: 0.9 }}
         whileInView={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8 }}
-        className="relative w-full h-[500px] flex items-center justify-center"
+        className="relative w-full h-[500px] sm:h-[600px] md:h-[500px] flex items-center justify-center"
       >
         {/* Center heading */}
-        <h3 className="absolute text-5xl font-marker1 text-center text-[#000]">
+        <h3 className="absolute text-3xl sm:text-4xl md:text-5xl font-marker1 text-center text-[#000] px-4">
           My Ethics & Principles
         </h3>
 
         {/* Ethics scattered */}
         {aboutMeContent.ethics.map((ethic, i) => {
-          const fontClass = ` max-w-[200px] font-marker${(i % 5) + 1}`;
+          const fontClass = `max-w-[150px] sm:max-w-[180px] md:max-w-[200px] font-marker${
+            (i % 5) + 1
+          }`;
           const positions = [
-            { top: "10%", left: "20%" },
-            { top: "25%", right: "15%" },
-            { bottom: "20%", left: "10%" },
-            { bottom: "15%", right: "20%" },
-            { top: "50%", left: "5%" },
+            { top: "10%", left: "10%" },
+            { top: "25%", right: "8%" },
+            { bottom: "20%", left: "5%" },
+            { bottom: "15%", right: "12%" },
+            { top: "55%", left: "3%" },
             { bottom: "40%", right: "5%" },
+          ];
+
+          // Mobile-friendly positions (stack more vertically)
+          const mobilePositions = [
+            { top: "10%", left: "5%" },
+            { top: "20%", right: "5%" },
+            { top: "60%", left: "5%" },
+            { top: "65%", right: "5%" },
+            { top: "80%", left: "5%" },
+            { top: "95%", right: "5%" },
           ];
 
           return (
             <motion.div
               key={i}
-              className={`absolute bg-white/80 shadow-md p-3 rounded torn-edge ${fontClass}`}
+              className={`absolute bg-white/80 shadow-md p-2 sm:p-3 rounded torn-edge text-sm sm:text-base ${fontClass}`}
               style={{
-                ...positions[i % positions.length],
+                ...(window.innerWidth < 640
+                  ? mobilePositions[i % mobilePositions.length]
+                  : positions[i % positions.length]),
                 rotate: i % 2 === 0 ? -4 : 3,
               }}
               whileHover={{ scale: 1.05, rotate: 0 }}

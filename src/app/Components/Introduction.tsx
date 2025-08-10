@@ -17,7 +17,7 @@ export default function Intro() {
   }, []);
 
   return (
-    <section className="relative py-16 px-6 bg-[url('/paper-texture3.jpg')] torn-edge bg-cover w-full mt-[-60] z-30 overflow-visible">
+    <section className="relative py-16 px-6 bg-[url('/paper-texture3.jpg')] torn-edge bg-cover w-full mt-[-60] z-30 overflow-hidden">
       <div className="section-divider-dashed w-full " />
 
       {/* Notebook lines overlay */}
@@ -33,11 +33,11 @@ export default function Intro() {
             transition={{ duration: 0.6 }}
             className="text-3xl font-handwritten sm:text-5xl font-[cursive] font-bold text-[#2b2b2b]"
           >
-            Let's get started with the intro ?
+            Let&apos;s get started with the intro ?
           </motion.h2>
         ) : (
           <h2 className="text-3xl font-handwritten sm:text-5xl font-[cursive] font-bold text-[#2b2b2b]">
-            Let's get started with the intro ?
+            Let&apos;s get started with the intro ?
           </h2>
         )}
 
@@ -88,7 +88,7 @@ export default function Intro() {
         )}
 
         {/* 3D Model */}
-        <div className="flex flex-row mt-10 h-[600px] w-full justify-center items-center overflow-visible">
+        <div className="fle flex-col lg:flex-row mt-10 h-[600px] w-full justify-center items-center overflow-visible">
           {mounted && <ThreeDScene />}
 
           {/* Decorative doodles */}
