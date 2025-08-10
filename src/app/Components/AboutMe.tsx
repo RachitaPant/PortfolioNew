@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 const aboutMeContent = {
@@ -30,6 +30,15 @@ const aboutMeContent = {
 };
 
 const AboutMe = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 640);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   return (
     <motion.section
       initial={{ opacity: 0 }}
@@ -116,15 +125,17 @@ const AboutMe = () => {
             { top: "80%", left: "5%" },
             { top: "95%", right: "5%" },
           ];
+          const pos = isMobile
+            ? mobilePositions[i % mobilePositions.length]
+            : positions[i % positions.length];
 
           return (
             <motion.div
               key={i}
               className={`absolute bg-white/80 shadow-md p-2 sm:p-3 rounded torn-edge text-sm sm:text-base ${fontClass}`}
               style={{
-                ...(window.innerWidth < 640
-                  ? mobilePositions[i % mobilePositions.length]
-                  : positions[i % positions.length]),
+                ...pos,
+
                 rotate: i % 2 === 0 ? -4 : 3,
               }}
               whileHover={{ scale: 1.05, rotate: 0 }}

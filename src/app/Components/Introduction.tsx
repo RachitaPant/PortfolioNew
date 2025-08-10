@@ -88,7 +88,7 @@ export default function Intro() {
         )}
 
         {/* 3D Model */}
-        <div className="fle flex-col lg:flex-row mt-10 h-[600px] w-full justify-center items-center overflow-visible">
+        <div className="flex flex-col md:flex-row mt-10 h-[600px] w-full justify-center items-center overflow-visible">
           {mounted && <ThreeDScene />}
 
           {/* Decorative doodles */}
