@@ -1,26 +1,139 @@
+@import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kalam&display=swap");
+
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+@font-face {
+  font-family: "handwritten";
+  src: url("https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap");
+}
+
+.font-handwritten {
+  font-family: "Reenie Beanie", cursive;
+}
+
+.font-marker1 {
+  font-family: "Permanent Marker", cursive;
+}
+.font-marker2 {
+  font-family: "Rock Salt", cursive;
+}
+.font-marker3 {
+  font-family: "Gloria Hallelujah", cursive;
+}
+.font-marker4 {
+  font-family: "Shadows Into Light", cursive;
+}
+.font-marker5 {
+  font-family: "Kalam", cursive;
+}
+.drop-shadow-md {
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* Text shadow for notebook scribble effect */
+.text-shadow-note {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+.torn-edge {
+  clip-path: polygon(
+    0% 0%,
+    5% 2%,
+    10% 0%,
+    15% 3%,
+    20% 1%,
+    25% 4%,
+    30% 2%,
+    35% 0%,
+    40% 3%,
+    45% 1%,
+    50% 4%,
+    55% 2%,
+    60% 0%,
+    65% 3%,
+    70% 1%,
+    75% 4%,
+    80% 2%,
+    85% 0%,
+    90% 3%,
+    95% 1%,
+    100% 0%,
+    100% 100%,
+    95% 98%,
+    90% 100%,
+    85% 97%,
+    80% 99%,
+    75% 96%,
+    70% 98%,
+    65% 100%,
+    60% 97%,
+    55% 99%,
+    50% 96%,
+    45% 98%,
+    40% 100%,
+    35% 97%,
+    30% 99%,
+    25% 96%,
+    20% 98%,
+    15% 100%,
+    10% 97%,
+    5% 99%,
+    0% 100%
+  );
+}
+
+.doodle-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px dashed #2b2b2b;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+/* Chalk shadow effect */
+.text-shadow-chalk {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5), 0 0 2px rgba(255, 255, 255, 0.3);
+}
+@layer components {
+  .section-divider-dashed {
+    border-top: 3px dashed #4b5563;
+    margin: 2rem auto;
+    max-width: 100%;
+  }
+
+  .section-divider-cross {
+    position: relative;
+    height: 3px;
+    background: #4b5563;
+    margin: 2rem auto;
+    max-width: 100%;
+  }
+
+  .section-divider-cross::before,
+  .section-divider-cross::after {
+    content: "";
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    width: 48px;
+    height: 3px;
+    background: #4b5563;
+    transform-origin: center;
+  }
+
+  .section-divider-cross::before {
+    transform: translateX(-50%) rotate(45deg);
+  }
+
+  .section-divider-cross::after {
+    transform: translateX(-50%) rotate(-45deg);
+  }
 }
