@@ -31,13 +31,13 @@ export default function Footer() {
             <FaGithub />
           </a>
           <a
-            href="rachitap89@example.com"
+            href="mailto:rachitap89@gmail.com?subject=Hello&body=Lets%20Connect%20"
             className="hover:text-red-500 transition"
           >
             <MdEmail />
           </a>
           <a
-            href="https://codolio.com/yourprofile"
+            href="https://codolio.com/profile/rachita"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-green-600 transition"
@@ -46,7 +46,6 @@ export default function Footer() {
           </a>
         </div>
 
-        {/* Copyright */}
         <p className="text-sm text-gray-500 mt-4">
           © {new Date().getFullYear()} Rachita Pant. All rights reserved.
         </p>
