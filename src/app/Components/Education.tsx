@@ -1,14 +1,23 @@
+"use client";
+
 import { motion } from "framer-motion";
 import React from "react";
 import Image from "next/image";
+
+// Hoisted: these object literals were recreated for every card on every render.
+const cardHover = { rotate: 0 };
+const cardTransition = { type: "spring", stiffness: 200, damping: 20 } as const;
 
 const Education = () => {
   return (
     <motion.section
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
+      // Without `once` this re-ran the fade every single time the section
+      // crossed the viewport, so scrolling back up re-animated the whole page.
+      viewport={{ once: true, amount: 0.15 }}
       transition={{ duration: 0.8 }}
-      className="px-8 py-16   mx-auto bg-[url('/paper-bg2.jpg')] bg-cover w-full torn-edge mt-[-130] z-20"
+      className="px-8 py-16   mx-auto bg-[url('/paper-bg2.webp')] bg-cover w-full torn-edge mt-[-130] z-20"
     >
       {/* Divider: Dashed Line */}
       <div className="section-divider-dashed w-full max-w-5xl" />
@@ -19,12 +28,16 @@ const Education = () => {
       <div className="mt-12 space-y-10">
         {/* College */}
         <motion.div
-          whileHover={{ rotate: 0 }}
+          whileHover={cardHover}
           initial={{ rotate: -2 }}
+          transition={cardTransition}
           className="bg-[#fffbea] p-6 rounded-lg shadow-lg max-w-3xl mx-auto relative"
         >
           {/* Tape */}
-          <span className="absolute -top-4 left-6 w-16 h-6 bg-yellow-300 rotate-[-6deg] opacity-70"></span>
+          <span
+            className="absolute -top-4 left-6 w-16 h-6 bg-yellow-300 rotate-[-6deg] opacity-70"
+            aria-hidden="true"
+          />
 
           <h3 className="text-2xl font-bold">
             G. B Pant Institute of Engineering and Technology
@@ -53,10 +66,11 @@ const Education = () => {
           {/* Image */}
           <div className="mt-4">
             <Image
-              src="/college.jpg"
-              alt="GB Pant Institute"
+              src="/college.webp"
+              alt="GB Pant Institute of Engineering and Technology campus"
               width={500}
               height={300}
+              sizes="(max-width: 768px) 100vw, 500px"
               className="rounded-md shadow-md"
             />
           </div>
@@ -64,12 +78,16 @@ const Education = () => {
 
         {/* Doon Valley */}
         <motion.div
-          whileHover={{ rotate: 0 }}
+          whileHover={cardHover}
           initial={{ rotate: 2 }}
+          transition={cardTransition}
           className="bg-[#fdfdfd] p-6 rounded-lg shadow-lg max-w-3xl mx-auto relative"
         >
           {/* Tape */}
-          <span className="absolute -top-4 right-6 w-16 h-6 bg-blue-200 rotate-[5deg] opacity-70"></span>
+          <span
+            className="absolute -top-4 right-6 w-16 h-6 bg-blue-200 rotate-[5deg] opacity-70"
+            aria-hidden="true"
+          />
 
           <h3 className="text-2xl font-bold">
             Doon Valley International School, Dehradun
@@ -91,9 +109,10 @@ const Education = () => {
           <div className="mt-4">
             <Image
               src="/school2.webp"
-              alt="Doon Valley School"
+              alt="Doon Valley International School building"
               width={500}
               height={300}
+              sizes="(max-width: 768px) 100vw, 500px"
               className="rounded-md shadow-md"
             />
           </div>
@@ -101,12 +120,16 @@ const Education = () => {
 
         {/* Montessori */}
         <motion.div
-          whileHover={{ rotate: 0 }}
+          whileHover={cardHover}
           initial={{ rotate: -2 }}
+          transition={cardTransition}
           className="bg-[#fffbea] p-6 rounded-lg shadow-lg max-w-3xl mx-auto relative"
         >
           {/* Tape */}
-          <span className="absolute -top-4 left-6 w-16 h-6 bg-pink-200 rotate-[-6deg] opacity-70"></span>
+          <span
+            className="absolute -top-4 left-6 w-16 h-6 bg-pink-200 rotate-[-6deg] opacity-70"
+            aria-hidden="true"
+          />
 
           <h3 className="text-2xl font-bold">
             The Montessori School, Dehradun
@@ -137,9 +160,10 @@ const Education = () => {
           <div className="mt-4">
             <Image
               src="/montessori.avif"
-              alt="Montessori School"
+              alt="The Montessori School, Dehradun"
               width={500}
               height={300}
+              sizes="(max-width: 768px) 100vw, 500px"
               className="rounded-md shadow-md"
             />
           </div>

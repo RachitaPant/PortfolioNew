@@ -61,24 +61,36 @@ const techTagVariants = {
   hover: { scale: 1.05, rotate: 2 },
 };
 
+// Hoisted so the ~9 tech tags don't each get a fresh object every render.
+const techTagTransition = { type: "spring", stiffness: 300 } as const;
+
 export default function Experience() {
   return (
-    <section className="px-4 sm:px-8 py-16 w-full bg-[url('/paper-texture3.jpg')] bg-cover bg-repeat relative mt-[-100px] z-10 ">
-      <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.05)_1px,transparent_1px)] bg-[length:100%_2.5rem] pointer-events-none" />
-
+    <section className="notebook-lines px-4 sm:px-8 py-16 w-full bg-[url('/paper-texture3.webp')] bg-cover bg-repeat relative mt-[-100px] z-10 ">
       <h2 className="text-4xl font-marker5 font-bold text-center text-[#2b2b2b] mb-12 text-shadow-note mt-16">
         Work Experience :
       </h2>
 
       <div className="max-w-4xl mx-auto space-y-12">
-        {experiences.map((exp, i) => (
+        {/*
+          A backdrop blur was removed from these cards. It makes the compositor
+          re-sample and blur everything behind each card on every scroll frame,
+          and behind an 80%-opaque white fill only about a fifth of that blurred
+          backdrop was ever visible — a near-invisible effect paid for with a
+          per-frame backdrop pass directly on the scroll path.
+
+          (Deliberately not naming the utility class here: Tailwind scans source
+          files for bare strings, so writing it in a comment is enough to
+          regenerate the dead rule in the stylesheet.)
+        */}
+        {experiences.map((exp) => (
           <motion.div
-            key={i}
+            key={exp.company}
             variants={cardVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
-            className="p-6 bg-white/80 backdrop-blur-sm shadow-md rounded-lg transform relative torn-edge-card"
+            className="p-6 bg-white/80 shadow-md rounded-lg transform relative torn-edge-card"
           >
             {/* Highlight Quote Bubble */}
             <div className="absolute  -top-10 md:-top-5 lg:-top-4 right-1  md:right-4 p-3 bg-yellow-100 rounded-full shadow-md transform rotate-3 text-xs font-marker3 text-[#2b2b2b] max-w-xs text-center">
@@ -95,13 +107,13 @@ export default function Experience() {
 
             {/* Tech Stack Tags */}
             <div className="mt-4 flex flex-wrap gap-2">
-              {exp.tech.map((tech, j) => (
+              {exp.tech.map((tech) => (
                 <motion.span
-                  key={j}
+                  key={tech}
                   className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700 font-medium transform rotate-1"
                   variants={techTagVariants}
                   whileHover="hover"
-                  transition={{ type: "spring", stiffness: 300 }}
+                  transition={techTagTransition}
                 >
                   {tech}
                 </motion.span>
@@ -110,8 +122,8 @@ export default function Experience() {
 
             {/* Details List */}
             <ul className="mt-4 list-disc list-inside text-gray-700 space-y-2">
-              {exp.details.map((point, idx) => (
-                <li key={idx} className="leading-relaxed">
+              {exp.details.map((point) => (
+                <li key={point} className="leading-relaxed">
                   {point}
                 </li>
               ))}

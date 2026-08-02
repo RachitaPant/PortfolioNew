@@ -1,47 +1,70 @@
-@import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Kalam&display=swap");
-
 @import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Fonts
+   Loaded and self-hosted by next/font in layout.tsx. Each family is exposed as
+   a CSS variable on <html>; the classes below just map onto those variables so
+   the existing markup keeps working. No @import / no external font requests.
+--------------------------------------------------------------------------- */
+.font-handwritten {
+  font-family: var(--font-handwritten), cursive;
+}
+.font-marker1 {
+  font-family: var(--font-marker1), cursive;
+}
+.font-marker2 {
+  font-family: var(--font-marker2), cursive;
+}
+.font-marker3 {
+  font-family: var(--font-marker3), cursive;
+}
+.font-marker4 {
+  font-family: var(--font-marker4), cursive;
+}
+.font-marker5 {
+  font-family: var(--font-marker5), cursive;
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
 body {
   margin: 0;
   padding: 0;
 }
 
-@font-face {
-  font-family: "handwritten";
-  src: url("https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap");
+.paper-body {
+  font-family: var(--font-body), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background-image: url("/paper-texture.webp");
+  background-repeat: repeat;
+  background-size: cover;
+  background-position: center;
 }
 
-.font-handwritten {
-  font-family: "Reenie Beanie", cursive;
+/* Visible keyboard focus. The site previously relied on the UA default, which
+   is suppressed on the elements that use custom backgrounds. */
+:focus-visible {
+  outline: 2px solid #2b2b2b;
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
-.font-marker1 {
-  font-family: "Permanent Marker", cursive;
-}
-.font-marker2 {
-  font-family: "Rock Salt", cursive;
-}
-.font-marker3 {
-  font-family: "Gloria Hallelujah", cursive;
-}
-.font-marker4 {
-  font-family: "Shadows Into Light", cursive;
-}
-.font-marker5 {
-  font-family: "Kalam", cursive;
-}
+/* ---------------------------------------------------------------------------
+   Paper / notebook decoration
+--------------------------------------------------------------------------- */
 .drop-shadow-md {
   filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
 }
 
-/* Text shadow for notebook scribble effect */
 .text-shadow-note {
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
+
+.text-shadow-chalk {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5), 0 0 2px rgba(255, 255, 255, 0.3);
+}
+
 .torn-edge {
   clip-path: polygon(
     0% 0%,
@@ -98,10 +121,44 @@ body {
   pointer-events: none;
 }
 
-/* Chalk shadow effect */
-.text-shadow-chalk {
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5), 0 0 2px rgba(255, 255, 255, 0.3);
+/* Ruled-paper overlay. Previously an extra absolutely positioned <div> in four
+   components; as a background layer it is one less node to lay out and paint. */
+.notebook-lines::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.05) 1px,
+    transparent 1px
+  );
+  background-size: 100% 2.5rem;
 }
+
+/* Scattered "ethics" notes.
+   These were positioned from JS: an `isMobile` state fed by an unthrottled
+   resize listener, which re-rendered the whole section on every resize event
+   and rendered the desktop layout on the server before correcting it on the
+   client. Both position sets now ship as custom properties and the media query
+   picks one — no state, no listener, no post-hydration shift.
+   Any side left unset resolves to `auto`, which is what we want. */
+.ethic-note {
+  top: var(--n-top);
+  right: var(--n-right);
+  bottom: var(--n-bottom);
+  left: var(--n-left);
+}
+
+@media (max-width: 639px) {
+  .ethic-note {
+    top: var(--m-top);
+    right: var(--m-right);
+    bottom: var(--m-bottom);
+    left: var(--m-left);
+  }
+}
+
 @layer components {
   .section-divider-dashed {
     border-top: 3px dashed #4b5563;
@@ -135,5 +192,283 @@ body {
 
   .section-divider-cross::after {
     transform: translateX(-50%) rotate(-45deg);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Ambient loops
+   These used to be `repeat: Infinity` framer-motion animations. Framer drives
+   those from a requestAnimationFrame loop that writes inline styles on the main
+   thread every frame, for the whole life of the page, whether or not the
+   element is on screen. As plain CSS transform/opacity keyframes the compositor
+   runs them off the main thread and the browser throttles them when the tab or
+   element is not visible, so scrolling and interaction stay at 60 FPS.
+--------------------------------------------------------------------------- */
+.anim-plane-lg,
+.anim-plane-sm1,
+.anim-plane-sm2,
+.anim-sticky-wobble,
+.anim-photo-wobble,
+.anim-scroll-hint {
+  will-change: transform;
+}
+
+/*
+ * The planes fly two different paths, swapping every 4s, exactly as the
+ * original framer variants did. Each cycle below is therefore the *pair* of
+ * paths back to back, not one path played forwards and backwards:
+ *
+ *   0%   -> 50%   the first variant
+ *   50%  -> 100%  the second variant
+ *
+ * Where the original snapped between two positions (framer jumps straight to
+ * the first value of a new keyframe array), the jump is reproduced with two
+ * stops 0.01% apart. The nose angle flipped with direction too, so each plane
+ * has a second `-nose` animation on the inner image, stepped rather than eased.
+ */
+
+/* Big plane: 3s outbound, 1s hold at the end, snap, 4s return. */
+@keyframes plane-lg {
+  0% {
+    transform: translate3d(-100px, -100px, 0) rotate(0deg) scale(1);
+  }
+  12.5% {
+    transform: translate3d(200px, 50px, 0) rotate(15deg) scale(1.1);
+  }
+  25% {
+    transform: translate3d(500px, 300px, 0) rotate(-20deg) scale(0.95);
+  }
+  37.5%,
+  50% {
+    transform: translate3d(900px, 600px, 0) rotate(10deg) scale(1);
+  }
+  50.01% {
+    transform: translate3d(900px, -100px, 0) rotate(0deg) scale(1);
+  }
+  66.666% {
+    transform: translate3d(500px, 30px, 0) rotate(-15deg) scale(1.1);
+  }
+  83.333% {
+    transform: translate3d(200px, 280px, 0) rotate(20deg) scale(0.95);
+  }
+  100% {
+    transform: translate3d(-100px, 600px, 0) rotate(-10deg) scale(1);
+  }
+}
+
+@keyframes plane-lg-nose {
+  0%,
+  49.99% {
+    transform: rotate(90deg);
+  }
+  50%,
+  100% {
+    transform: rotate(180deg);
+  }
+}
+
+/* Small plane 1. The two paths meet at 90vw/-10vh, so there is no snap here. */
+@keyframes plane-sm1 {
+  0% {
+    transform: translate3d(-10vw, -10vh, 0) rotate(0deg) scale(1);
+  }
+  8.333% {
+    transform: translate3d(30vw, 40vh, 0) rotate(0deg) scale(1.05);
+  }
+  16.666% {
+    transform: translate3d(40vw, 80vh, 0) rotate(90deg) scale(1);
+  }
+  25% {
+    transform: translate3d(50vw, 40vh, 0) rotate(80deg) scale(1.1);
+  }
+  33.333% {
+    transform: translate3d(60vw, 30vh, 0) rotate(70deg) scale(1);
+  }
+  41.666% {
+    transform: translate3d(80vw, 10vh, 0) rotate(15deg) scale(1.05);
+  }
+  50% {
+    transform: translate3d(90vw, -10vh, 0) rotate(0deg) scale(1);
+  }
+  58.333% {
+    transform: translate3d(80vw, 10vh, 0) rotate(-10deg) scale(1.05);
+  }
+  66.666% {
+    transform: translate3d(50vw, 20vh, 0) rotate(15deg) scale(1);
+  }
+  75% {
+    transform: translate3d(20vw, 50vh, 0) rotate(-20deg) scale(1.1);
+  }
+  83.333% {
+    transform: translate3d(0vw, 40vh, 0) rotate(10deg) scale(1);
+  }
+  91.666% {
+    transform: translate3d(-10vw, 60vh, 0) rotate(-15deg) scale(1.05);
+  }
+  100% {
+    transform: translate3d(-20vw, 80vh, 0) rotate(0deg) scale(1);
+  }
+}
+
+@keyframes plane-sm1-nose {
+  0%,
+  49.99% {
+    transform: rotate(70deg);
+  }
+  50%,
+  100% {
+    transform: rotate(190deg);
+  }
+}
+
+/* Small plane 2 starts on the right-to-left path, mirroring `direction2`. */
+@keyframes plane-sm2 {
+  0% {
+    transform: translate3d(90vw, -20vh, 0) rotate(0deg) scale(1);
+  }
+  8.333% {
+    transform: translate3d(120vw, 40vh, 0) rotate(-10deg) scale(1.05);
+  }
+  16.666% {
+    transform: translate3d(80vw, 30vh, 0) rotate(15deg) scale(1);
+  }
+  25% {
+    transform: translate3d(20vw, 50vh, 0) rotate(-20deg) scale(1.1);
+  }
+  33.333% {
+    transform: translate3d(0vw, 40vh, 0) rotate(10deg) scale(1);
+  }
+  41.666% {
+    transform: translate3d(-10vw, 60vh, 0) rotate(-15deg) scale(1.05);
+  }
+  50% {
+    transform: translate3d(-20vw, 80vh, 0) rotate(0deg) scale(1);
+  }
+  50.01% {
+    transform: translate3d(-30vw, -10vh, 0) rotate(0deg) scale(1);
+  }
+  58.333% {
+    transform: translate3d(40vw, 50vh, 0) rotate(10deg) scale(1.05);
+  }
+  66.666% {
+    transform: translate3d(80vw, 30vh, 0) rotate(25deg) scale(1);
+  }
+  75% {
+    transform: translate3d(100vw, 40vh, 0) rotate(35deg) scale(1.1);
+  }
+  83.333% {
+    transform: translate3d(120vw, 30vh, 0) rotate(-10deg) scale(1);
+  }
+  91.666% {
+    transform: translate3d(80vw, 50vh, 0) rotate(15deg) scale(1.05);
+  }
+  100% {
+    transform: translate3d(90vw, 80vh, 0) rotate(0deg) scale(1);
+  }
+}
+
+@keyframes plane-sm2-nose {
+  0%,
+  49.99% {
+    transform: rotate(190deg);
+  }
+  50%,
+  100% {
+    transform: rotate(60deg);
+  }
+}
+
+@keyframes sticky-wobble {
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes photo-wobble {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  33% {
+    transform: rotate(2deg);
+  }
+  66% {
+    transform: rotate(-2deg);
+  }
+}
+
+@keyframes scroll-hint {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, 6px, 0);
+  }
+}
+
+/* 8s = the original 4s direction-flip interval, times the two paths. */
+.anim-plane-lg {
+  animation: plane-lg 8s ease-in-out infinite;
+}
+.anim-plane-sm1 {
+  animation: plane-sm1 8s ease-in-out infinite;
+}
+.anim-plane-sm2 {
+  animation: plane-sm2 8s ease-in-out infinite;
+}
+
+/* Nose direction: a hard flip at the halfway point, never interpolated. */
+.anim-plane-lg-nose {
+  animation: plane-lg-nose 8s step-end infinite;
+}
+.anim-plane-sm1-nose {
+  animation: plane-sm1-nose 8s step-end infinite;
+}
+.anim-plane-sm2-nose {
+  animation: plane-sm2-nose 8s step-end infinite;
+}
+
+.anim-sticky-wobble {
+  animation: sticky-wobble 5s ease-in-out infinite;
+}
+.anim-photo-wobble {
+  animation: photo-wobble 4s ease-in-out infinite;
+}
+.anim-scroll-hint {
+  animation: scroll-hint 1.5s ease-in-out infinite;
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+
+   "Reduce", not "remove". An earlier pass here stopped every animation on the
+   page outright, which is the strictest reading of the preference but leaves
+   the site completely inert for anyone whose system reports it — and the
+   preference is not always a deliberate accessibility choice, since it tracks
+   an OS-level animation setting that other things can switch off.
+
+   So the planes keep flying, at a third of the speed, and the small in-place
+   idles (a 3deg tilt, a 6px bounce) keep running as they are. What goes is the
+   fast, large-amplitude travel that the preference actually exists to prevent.
+
+   To restore the strict behaviour instead, replace the plane rule below with
+   `animation: none !important; will-change: auto;`.
+
+   Framer Motion is handled separately by <MotionConfig reducedMotion="user">,
+   which already drops its entrance transforms down to plain opacity fades.
+--------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .anim-plane-lg,
+  .anim-plane-sm1,
+  .anim-plane-sm2,
+  .anim-plane-lg-nose,
+  .anim-plane-sm1-nose,
+  .anim-plane-sm2-nose {
+    animation-duration: 24s;
   }
 }
