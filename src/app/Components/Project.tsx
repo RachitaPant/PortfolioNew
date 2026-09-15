@@ -7,29 +7,37 @@ import { seededRotation } from "@/lib/rotation";
 
 const projects = [
   {
-    title: "Dynamic Anime Community App",
-    duration: "Oct 2023 – Jan 2024",
-    location: "Remote",
-    tech: "React Native (Frontend) | Firebase (Backend)",
+    title: "ProofLoop Digital Approval System",
+    duration: "2026",
+    location: "",
+    tech: "Java | Spring Boot | Next.js | MongoDB | Docker",
     details: [
-      "Developed cross-platform mobile app with secure Firebase Authentication.",
-      "Integrated Jikan API for real-time anime search with <0.8s response.",
-      "Built community features for posts with Firebase Firestore & Storage.",
-      "Customizable user profiles with profile pictures & avatars.",
+      "Built a workflow-based approval platform replacing email approvals with role-based actions, configurable multi-stage workflows, and full audit history, backed by a Spring Boot REST API and Next.js frontend.",
+      "Containerized the backend with Docker and deployed backend/frontend independently (Render, Vercel) — end-to-end deployment and DevOps ownership.",
     ],
-    link: "https://github.com/RachitaPant/Strawhat",
+    link: "https://github.com/RachitaPant",
   },
   {
     title: "Web Performance Resource Analyzer",
-    duration: "2024 – 2025",
+    duration: "2025",
     location: "",
-    tech: "Next.js | Lighthouse | Puppeteer",
+    tech: "Next.js | Lighthouse | Puppeteer | GCP",
     details: [
-      "Automated web performance testing tool using Lighthouse & Puppeteer.",
-      "Analyzed Core Web Vitals (LCP, FID, CLS) and visualized data with Chart.js.",
-      "Provided actionable SEO & performance optimization insights.",
+      "Built a performance-auditing tool on GCP measuring Core Web Vitals (LCP, FID, CLS) and resource usage via Lighthouse/Puppeteer in a stable Chrome environment.",
+      "Visualized results in Chart.js for reliable, repeatable audits at scale.",
     ],
     link: "https://github.com/RachitaPant/Web-Performance-Analyzer",
+  },
+  {
+    title: "Voice-Guided AI Tutor",
+    duration: "2025",
+    location: "",
+    tech: "Next.js | FastAPI | LiveKit | Tavus | Deepgram | OpenAI",
+    details: [
+      "Built a real-time voice-interactive tutoring system using LiveKit Agents and Tavus AI avatars, with an async FastAPI backend handling concurrent voice sessions.",
+      "Integrated Deepgram for speech-to-text, ElevenLabs for speech synthesis, and OpenAI for contextual response generation — a full end-to-end AI voice pipeline.",
+    ],
+    link: "https://github.com/RachitaPant",
   },
 ];
 

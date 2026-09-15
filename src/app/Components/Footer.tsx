@@ -1,4 +1,4 @@
-import { FaLinkedin, FaGithub } from "react-icons/fa";
+import { FaLinkedin, FaGithub, FaInstagram } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 
 /*
@@ -48,6 +48,15 @@ export default function Footer() {
             className="hover:text-gray-900 transition-colors"
           >
             <FaGithub aria-hidden="true" />
+          </a>
+          <a
+            href="https://www.instagram.com/lifeofanerd._"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram profile (opens in a new tab)"
+            className="hover:text-pink-500 transition-colors"
+          >
+            <FaInstagram aria-hidden="true" />
           </a>
           <a
             href="mailto:rachitap89@gmail.com?subject=Hello&body=Lets%20Connect%20"

@@ -9,14 +9,15 @@ const experiences = [
     company: "SiteGuide",
     location: "Remote",
     duration: "July 2025 – Present",
-    tech: ["Next.js", "React Native", "Zustand", "Axios"],
+    tech: ["Node.js", "Express", "Spring Boot", "PostgreSQL", "Next.js", "React Native"],
     details: [
-      "Developed and integrated real-time community features (polling, voice notes ) for a production app with existing userbase, optimizing audio processing to eliminate buffering.",
-      " Worked on Redesigning of production-level applications with modular code.",
-      "Contributed to agile debugging sprints in ClickUp, resolving critical bugs for robust functionality.",
+      "Shipped 5+ production full-stack applications (web & mobile) across edtech, legal-tech, e-commerce, and B2B SaaS — owning design through deployment, writing tests, and participating in code review with senior engineers.",
+      "Built a Udemy-style edtech platform (live courses, Mux video, instructor/admin dashboards), a legal-tech platform with multi-role lawyer/claimant workflows, and a B2B SaaS director-appointment and due-diligence system.",
+      "Implemented SEO-optimized e-commerce with SSR and ISR in Next.js; built a RAG-based AI voice agent (LiveKit, LangChain, Pinecone, Redis); contributed backend features to a trading/analytics platform serving 50K users.",
+      "Built an end-to-end lead-management automation system: custom Pabbly Chatflow bots for WhatsApp/email capture, Pabbly Connect workflows for multi-step follow-ups, and SendFox campaigns, with activity piped into Google Sheets for real-time analytics.",
     ],
     highlight:
-      "Optimized audio processing to eliminate buffering in real-time community features.",
+      "Shipped 5+ production full-stack apps across edtech, legal-tech, e-commerce, and B2B SaaS.",
   },
   {
     title: "Software Development Intern",
