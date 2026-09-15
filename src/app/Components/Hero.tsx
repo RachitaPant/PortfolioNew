@@ -15,6 +15,26 @@ import Image from "next/image";
  * transform only (see globals.css). The compositor runs them, the browser
  * throttles them while off-screen, and this component renders exactly once.
  */
+const TETRIS_COLORS: Record<string, string> = {
+  i: "#31c7ef",
+  o: "#f7d308",
+  t: "#ad4d9c",
+  s: "#42b642",
+  z: "#ef2029",
+  j: "#5a65ad",
+  l: "#ef7921",
+};
+
+const TETRIS_PIECES = [
+  { shape: "i", left: "6%", land: "48vh", duration: "7s", delay: "0s" },
+  { shape: "o", left: "18%", land: "58vh", duration: "6s", delay: "1.2s" },
+  { shape: "t", left: "30%", land: "42vh", duration: "8s", delay: "2.4s" },
+  { shape: "s", left: "44%", land: "60vh", duration: "6.5s", delay: "0.6s" },
+  { shape: "z", left: "58%", land: "50vh", duration: "7.5s", delay: "3s" },
+  { shape: "j", left: "70%", land: "45vh", duration: "9s", delay: "1.8s" },
+  { shape: "l", left: "82%", land: "56vh", duration: "6s", delay: "4s" },
+] as const;
+
 const PLANES = [
   {
     animation: "anim-plane-lg",
@@ -45,8 +65,34 @@ const Hero = () => {
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="notebook-lines relative flex flex-col items-center justify-center py-20 px-6 text-center bg-[url('/paper-texture.webp')] bg-cover w-full overflow-hidden torn-edge z-[40] mt-[-40]"
+      className="notebook-lines relative flex flex-col items-center justify-center py-20 px-6 text-center bg-[#fdf6e3] w-full overflow-hidden torn-edge z-[40] mt-[-40]"
     >
+      {/* Tetris board — decorative, CSS-only, hidden from assistive tech. */}
+      <div className="tetris-board" aria-hidden="true">
+        {TETRIS_PIECES.map((piece) => (
+          <div
+            key={piece.shape}
+            className={`tetris-piece tetris-${piece.shape}`}
+            style={
+              {
+                left: piece.left,
+                "--land": piece.land,
+                animationDuration: piece.duration,
+                animationDelay: piece.delay,
+              } as React.CSSProperties
+            }
+          >
+            {Array.from({ length: 4 }).map((_, i) => (
+              <span
+                key={i}
+                className="tetris-block"
+                style={{ background: TETRIS_COLORS[piece.shape] }}
+              />
+            ))}
+          </div>
+        ))}
+      </div>
+
       {/* Paper planes — decorative, so hidden from assistive tech. */}
       {PLANES.map((plane) => (
         <div

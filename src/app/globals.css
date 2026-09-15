@@ -472,3 +472,192 @@ body {
     animation-duration: 24s;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Tetris hero background
+   Pure CSS: no canvas, no per-frame JS. Each piece is a handful of divs laid
+   out with CSS grid, falling on a single `transform: translateY` keyframe (the
+   only property here that never triggers layout) so the compositor drives it
+   and it costs nothing beyond a static image would have. The landing depth is
+   passed in per-piece via the `--land` custom property.
+--------------------------------------------------------------------------- */
+.tetris-board {
+  --cell: clamp(10px, 2.2vw, 18px);
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background-image: linear-gradient(
+      rgba(0, 0, 0, 0.06) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.06) 1px, transparent 1px);
+  background-size: var(--cell) var(--cell);
+}
+
+.tetris-piece {
+  position: absolute;
+  top: 0;
+  display: grid;
+  grid-template-columns: repeat(4, var(--cell));
+  grid-template-rows: repeat(2, var(--cell));
+  gap: 2px;
+  will-change: transform;
+  animation-name: tetris-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.tetris-block {
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.35);
+}
+
+@keyframes tetris-fall {
+  0% {
+    transform: translateY(-120%);
+    opacity: 1;
+  }
+  35% {
+    transform: translateY(var(--land));
+    opacity: 1;
+  }
+  82% {
+    transform: translateY(var(--land));
+    opacity: 1;
+  }
+  94% {
+    transform: translateY(var(--land));
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(-120%);
+    opacity: 0;
+  }
+}
+
+/* Shapes, mapped onto the 4x2 grid with grid-area (row / col). */
+.tetris-i .tetris-block {
+  grid-row: 1 / 2;
+}
+.tetris-i .tetris-block:nth-child(1) {
+  grid-column: 1;
+}
+.tetris-i .tetris-block:nth-child(2) {
+  grid-column: 2;
+}
+.tetris-i .tetris-block:nth-child(3) {
+  grid-column: 3;
+}
+.tetris-i .tetris-block:nth-child(4) {
+  grid-column: 4;
+}
+
+.tetris-o .tetris-block:nth-child(1) {
+  grid-row: 1;
+  grid-column: 1;
+}
+.tetris-o .tetris-block:nth-child(2) {
+  grid-row: 1;
+  grid-column: 2;
+}
+.tetris-o .tetris-block:nth-child(3) {
+  grid-row: 2;
+  grid-column: 1;
+}
+.tetris-o .tetris-block:nth-child(4) {
+  grid-row: 2;
+  grid-column: 2;
+}
+
+.tetris-t .tetris-block:nth-child(1) {
+  grid-row: 1;
+  grid-column: 1;
+}
+.tetris-t .tetris-block:nth-child(2) {
+  grid-row: 1;
+  grid-column: 2;
+}
+.tetris-t .tetris-block:nth-child(3) {
+  grid-row: 1;
+  grid-column: 3;
+}
+.tetris-t .tetris-block:nth-child(4) {
+  grid-row: 2;
+  grid-column: 2;
+}
+
+.tetris-s .tetris-block:nth-child(1) {
+  grid-row: 1;
+  grid-column: 2;
+}
+.tetris-s .tetris-block:nth-child(2) {
+  grid-row: 1;
+  grid-column: 3;
+}
+.tetris-s .tetris-block:nth-child(3) {
+  grid-row: 2;
+  grid-column: 1;
+}
+.tetris-s .tetris-block:nth-child(4) {
+  grid-row: 2;
+  grid-column: 2;
+}
+
+.tetris-z .tetris-block:nth-child(1) {
+  grid-row: 1;
+  grid-column: 1;
+}
+.tetris-z .tetris-block:nth-child(2) {
+  grid-row: 1;
+  grid-column: 2;
+}
+.tetris-z .tetris-block:nth-child(3) {
+  grid-row: 2;
+  grid-column: 2;
+}
+.tetris-z .tetris-block:nth-child(4) {
+  grid-row: 2;
+  grid-column: 3;
+}
+
+.tetris-j .tetris-block:nth-child(1) {
+  grid-row: 1;
+  grid-column: 1;
+}
+.tetris-j .tetris-block:nth-child(2) {
+  grid-row: 2;
+  grid-column: 1;
+}
+.tetris-j .tetris-block:nth-child(3) {
+  grid-row: 2;
+  grid-column: 2;
+}
+.tetris-j .tetris-block:nth-child(4) {
+  grid-row: 2;
+  grid-column: 3;
+}
+
+.tetris-l .tetris-block:nth-child(1) {
+  grid-row: 1;
+  grid-column: 3;
+}
+.tetris-l .tetris-block:nth-child(2) {
+  grid-row: 2;
+  grid-column: 1;
+}
+.tetris-l .tetris-block:nth-child(3) {
+  grid-row: 2;
+  grid-column: 2;
+}
+.tetris-l .tetris-block:nth-child(4) {
+  grid-row: 2;
+  grid-column: 3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tetris-piece {
+    animation-play-state: paused;
+    transform: translateY(var(--land));
+    opacity: 0.6;
+  }
+}
