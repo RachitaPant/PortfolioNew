@@ -5,7 +5,16 @@ import { motion } from "framer-motion";
 import { FaPaperclip } from "react-icons/fa";
 import { seededRotation } from "@/lib/rotation";
 
-const projects = [
+type ProjectItem = {
+  title: string;
+  duration: string;
+  location: string;
+  tech: string;
+  details: string[];
+  link: string;
+};
+
+const fullstackProjects: ProjectItem[] = [
   {
     title: "ProofLoop Digital Approval System",
     duration: "2026",
@@ -29,6 +38,31 @@ const projects = [
     link: "https://github.com/RachitaPant/Web-Performance-Analyzer",
   },
   {
+    title: "Gramodyan",
+    duration: "2026",
+    location: "",
+    tech: "React | Vite | React Router | QR Code | Vercel",
+    details: [
+      "Ideathon prototype of a marketplace for a village incubation centre in Pauri Garhwal: producers (SHGs, farmers) list products and buyers discover and order them.",
+      "Each product batch carries a QR code linking to a public verification page, with a 4-step seller onboarding flow and dashboard.",
+    ],
+    link: "https://gramodyan.vercel.app/",
+  },
+];
+
+const multiAgentProjects: ProjectItem[] = [
+  {
+    title: "Lean Agents",
+    duration: "2026",
+    location: "",
+    tech: "Python | smolagents | Next.js | Upstash Redis | Groq | Gemini",
+    details: [
+      "Building reliable, token-efficient tool-using agents on free-tier LLMs: top-k tool retrieval, schema validate-and-repair for tool calls, and plan caching across similar tasks.",
+      "Compares planner/executor/verifier agents against a single agent at equal token budget, with a quota-aware router failing over Groq → Gemini → GitHub Models, evaluated on the BFCL benchmark.",
+    ],
+    link: "https://github.com/RachitaPant/Lean-Agents",
+  },
+  {
     title: "Voice-Guided AI Tutor",
     duration: "2025",
     location: "",
@@ -39,6 +73,30 @@ const projects = [
     ],
     link: "https://github.com/RachitaPant",
   },
+];
+
+const genAiProjects: ProjectItem[] = [];
+
+const mlProjects: ProjectItem[] = [
+  {
+    title: "Hybrid AI-NWP Forecast Blending",
+    duration: "2026",
+    location: "",
+    tech: "Python | Convex Optimization | Ensemble Forecasting",
+    details: [
+      "Built an extremity-conditioned ensemble that blends AI and numerical weather prediction models, with weights trained by convex optimization on a tail objective (threshold-weighted CRPS for heavy rain ≥64.5 mm/24h).",
+      "Used hierarchical spatial pooling (36 subdivisions → 5 regions → national) to learn stable weights despite sparse extreme-rainfall events.",
+    ],
+    link: "https://github.com/RachitaPant/Hybrid-AI-NWP-Multi-Model-Forecast-Blending-System",
+  },
+];
+
+// Sections with no projects yet are skipped when rendering.
+const sections = [
+  { title: "Fullstack Showcase", projects: fullstackProjects },
+  { title: "Multi-Agent Showcase", projects: multiAgentProjects },
+  { title: "Generative AI Showcase", projects: genAiProjects },
+  { title: "ML Showcase", projects: mlProjects },
 ];
 
 const pinVariants = {
@@ -61,57 +119,68 @@ const Project = () => {
         My Pinboard 📌
       </h2>
 
-      <div className="flex flex-wrap justify-center gap-10 max-w-6xl mx-auto">
-        {projects.map((project, i) => (
-          <a
-            key={project.title}
-            href={project.link || "#"}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`${project.title} — open the source on GitHub`}
-            className="rounded-lg"
-          >
-            <motion.div
-              className="relative bg-yellow-50 rounded-lg shadow-lg w-80 p-6 cursor-pointer select-text"
-              style={{
-                // Was `Math.random()`, recomputed on every render and different
-                // between server and client. Stable per project now.
-                rotate: `${seededRotation(i, 6)}deg`,
-              }}
-              whileHover="hover"
-              whileTap="tap"
-              variants={pinVariants}
-              transition={pinTransition}
-            >
-              {/* Paperclip icon top-left */}
-              <FaPaperclip
-                className="absolute top-3 left-3 text-yellow-400 text-xl rotate-[-15deg] drop-shadow-md"
-                aria-hidden="true"
-              />
+      <div className="space-y-16">
+        {sections
+          .filter((section) => section.projects.length > 0)
+          .map((section) => (
+            <div key={section.title}>
+              <h3 className="text-2xl font-[cursive] font-bold text-center text-[#fff] mb-8 select-none">
+                {section.title}
+              </h3>
+              <div className="flex flex-wrap justify-center gap-10 max-w-6xl mx-auto">
+                {section.projects.map((project, i) => (
+                  <a
+                    key={project.title}
+                    href={project.link || "#"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${project.title} — open the source on GitHub`}
+                    className="rounded-lg"
+                  >
+                    <motion.div
+                      className="relative bg-yellow-50 rounded-lg shadow-lg w-80 p-6 cursor-pointer select-text"
+                      style={{
+                        // Was `Math.random()`, recomputed on every render and different
+                        // between server and client. Stable per project now.
+                        rotate: `${seededRotation(i, 6)}deg`,
+                      }}
+                      whileHover="hover"
+                      whileTap="tap"
+                      variants={pinVariants}
+                      transition={pinTransition}
+                    >
+                      {/* Paperclip icon top-left */}
+                      <FaPaperclip
+                        className="absolute top-3 left-3 text-yellow-400 text-xl rotate-[-15deg] drop-shadow-md"
+                        aria-hidden="true"
+                      />
 
-              <h3 className="text-xl font-bold mb-1">{project.title}</h3>
-              <p className="text-sm text-gray-600 italic mb-3">
-                {project.duration}{" "}
-                {project.location && `| ${project.location}`}
-              </p>
-              <p className="text-sm text-gray-700 mb-3 font-mono">
-                {project.tech}
-              </p>
+                      <h3 className="text-xl font-bold mb-1">{project.title}</h3>
+                      <p className="text-sm text-gray-600 italic mb-3">
+                        {project.duration}{" "}
+                        {project.location && `| ${project.location}`}
+                      </p>
+                      <p className="text-sm text-gray-700 mb-3 font-mono">
+                        {project.tech}
+                      </p>
 
-              <ul className="list-disc list-inside text-gray-700 space-y-1 text-sm leading-snug">
-                {project.details.map((point) => (
-                  <li key={point}>{point}</li>
+                      <ul className="list-disc list-inside text-gray-700 space-y-1 text-sm leading-snug">
+                        {project.details.map((point) => (
+                          <li key={point}>{point}</li>
+                        ))}
+                      </ul>
+
+                      {/* Fake tape on bottom right */}
+                      <div
+                        className="absolute bottom-2 right-3 w-12 h-4 bg-yellow-300 rounded rotate-[-12deg] shadow-inner"
+                        aria-hidden="true"
+                      />
+                    </motion.div>
+                  </a>
                 ))}
-              </ul>
-
-              {/* Fake tape on bottom right */}
-              <div
-                className="absolute bottom-2 right-3 w-12 h-4 bg-yellow-300 rounded rotate-[-12deg] shadow-inner"
-                aria-hidden="true"
-              />
-            </motion.div>
-          </a>
-        ))}
+              </div>
+            </div>
+          ))}
       </div>
     </motion.section>
   );
