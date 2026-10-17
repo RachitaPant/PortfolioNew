@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 const HOBBIES: { icon: string; title: string; image?: string; text: string }[] = [
   { icon: "🏴‍☠️", title: "Manga at midnight", image: "/about/manga.png", text: "One Piece supremacy, at ungodly hours." },
   { icon: "🖊️", title: "Stationery hoarder", image: "/about/stationery.webp", text: "Pretty notebooks I swear I'll use someday." },
-  { icon: "🧪", title: "New-stack tinkering", text: "Learning a stack just to build a side project with it." },
+  { icon: "🧪", title: "New-stack tinkering", image: "/about/tinkering.webp", text: "Learning a stack just to build a side project with it." },
   { icon: "☕", title: "Solo coffee dates", image: "/about/coffee.webp", text: "Long ones. With myself. Highly recommended." },
   { icon: "🎧", title: "Hyper-specific playlists", image: "/about/playlists.webp", text: "\"Coding in a café with light rain outside.\"" },
 ];
