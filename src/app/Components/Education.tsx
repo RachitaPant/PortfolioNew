@@ -5,7 +5,7 @@ import React from "react";
 import Image from "next/image";
 
 const COLLEGE_STATS = [
-  { value: "7.89", label: "CGPA / 10" },
+  { value: "7.98", label: "CGPA / 10" },
   { value: "AIR 8k", label: "GATE CSE '26" },
   { value: "400+", label: "DSA problems solved" },
 ];
