@@ -4,8 +4,39 @@ import { motion } from "framer-motion";
 import React from "react";
 import Image from "next/image";
 
-// Hoisted: these object literals were recreated for every card on every render.
-const cardHover = { rotate: 0 };
+const COLLEGE_STATS = [
+  { value: "7.89", label: "CGPA / 10" },
+  { value: "AIR 8k", label: "GATE CSE '26" },
+  { value: "400+", label: "DSA problems solved" },
+];
+
+const COLLEGE_HIGHLIGHTS = [
+  "1st Prize, Manthan 2024 RoboSync (30+ teams)",
+  "Top 10 finalist, Navdhara 2024",
+  "Campus ambassador: GeeksforGeeks, AlgoZenith, IEEE",
+  "Ran workshops and mentored juniors",
+];
+
+const SCHOOLS = [
+  {
+    name: "Doon Valley International School",
+    board: "CBSE · Class XII, Science",
+    score: "95.6%",
+    note: "Topped my batch; first met MySQL and Python.",
+    image: "/school2.webp",
+    tape: "bg-blue-200",
+  },
+  {
+    name: "The Montessori School, Dehradun",
+    board: "ICSE · Class X",
+    score: "95.4%",
+    note: "All Rounder of the Year; a poem published in The Times of India; first Java program.",
+    image: "/montessori.avif",
+    tape: "bg-pink-200",
+  },
+];
+
+const cardHover = { rotate: 0, y: -4 };
 const cardTransition = { type: "spring", stiffness: 200, damping: 20 } as const;
 
 const Education = () => {
@@ -13,161 +44,100 @@ const Education = () => {
     <motion.section
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
-      // Without `once` this re-ran the fade every single time the section
-      // crossed the viewport, so scrolling back up re-animated the whole page.
       viewport={{ once: true, amount: 0.15 }}
       transition={{ duration: 0.8 }}
-      className="px-8 py-16   mx-auto bg-[url('/paper-bg2.webp')] bg-cover w-full torn-edge z-20"
+      className="px-4 sm:px-8 py-16 bg-[url('/paper-bg2.webp')] bg-cover w-full torn-edge z-20"
     >
-      {/* Divider: Dashed Line */}
-      <div className="section-divider-dashed w-full max-w-5xl" />
-      <h2 className="text-4xl font-[cursive] font-bold text-center text-[#2b2b2b]">
+      <h2 className="text-5xl font-handwritten font-bold text-center text-[#2b2b2b]">
         My Learning Chapters 📚
       </h2>
 
-      <div className="mt-12 space-y-10">
-        {/* College */}
-        <motion.div
-          whileHover={cardHover}
-          initial={{ rotate: -2 }}
-          transition={cardTransition}
-          className="bg-[#fffbea] p-6 rounded-lg shadow-lg max-w-3xl mx-auto relative"
-        >
-          {/* Tape */}
-          <span
-            className="absolute -top-4 left-6 w-16 h-6 bg-yellow-300 rotate-[-6deg] opacity-70"
-            aria-hidden="true"
+      {/* College: the main chapter */}
+      <motion.article
+        whileHover={cardHover}
+        initial={{ rotate: -1 }}
+        transition={cardTransition}
+        className="relative mt-12 max-w-5xl mx-auto grid overflow-hidden rounded-xl bg-[#fffbea] shadow-xl md:grid-cols-[2fr_3fr]"
+      >
+        <span
+          className="absolute -top-1 left-8 z-10 h-6 w-20 bg-yellow-300/80 rotate-[-6deg]"
+          aria-hidden="true"
+        />
+        <div className="relative min-h-[220px]">
+          <Image
+            src="/college.webp"
+            alt="G. B. Pant Institute of Engineering and Technology campus"
+            fill
+            sizes="(min-width: 768px) 400px, 100vw"
+            className="object-cover"
           />
+        </div>
 
-          <h3 className="text-2xl font-bold">
-            G. B Pant Institute of Engineering and Technology
-          </h3>
-          <p className="text-gray-600">
-            B.Tech - Computer Science and Engineering
+        <div className="p-6">
+          <p className="text-sm font-semibold uppercase tracking-wide text-[#b45309]">
+            Now · 2023 – 2027
           </p>
-          <p className="text-sm text-gray-500">2023 – 2027</p>
-
-          <ul className="list-disc list-inside mt-3 text-gray-700 leading-relaxed">
-            <li>
-              Dove headfirst into tech & development during my first year.
-            </li>
-            <li>
-              Building{" "}
-              <span className="font-semibold">production-grade websites</span>{" "}
-              and <span className="font-semibold">mobile applications</span>.
-            </li>
-            <li>
-              Currently exploring <span className="font-semibold">ML/DL</span>{" "}
-              and <span className="font-semibold">Spring Boot</span> — because
-              they feel less saturated and full of potential.
-            </li>
-          </ul>
-
-          {/* Image */}
-          <div className="mt-4">
-            <Image
-              src="/college.webp"
-              alt="GB Pant Institute of Engineering and Technology campus"
-              width={500}
-              height={300}
-              sizes="(max-width: 768px) 100vw, 500px"
-              className="rounded-md shadow-md"
-            />
-          </div>
-        </motion.div>
-
-        {/* Doon Valley */}
-        <motion.div
-          whileHover={cardHover}
-          initial={{ rotate: 2 }}
-          transition={cardTransition}
-          className="bg-[#fdfdfd] p-6 rounded-lg shadow-lg max-w-3xl mx-auto relative"
-        >
-          {/* Tape */}
-          <span
-            className="absolute -top-4 right-6 w-16 h-6 bg-blue-200 rotate-[5deg] opacity-70"
-            aria-hidden="true"
-          />
-
-          <h3 className="text-2xl font-bold">
-            Doon Valley International School, Dehradun
+          <h3 className="mt-1 text-2xl font-bold text-[#2b2b2b]">
+            G. B. Pant Institute of Engineering and Technology
           </h3>
-          <p className="text-gray-600">C.B.S.E - Science</p>
-          <p className="text-sm text-gray-500">Percentage: 95.60%</p>
+          <p className="text-gray-700">B.Tech, Computer Science and Engineering · Pauri</p>
 
-          <ul className="list-disc list-inside mt-3 text-gray-700 leading-relaxed">
-            <li>
-              Topped my 12th batch , first studied about mySQL and Python
-              Programming .
-            </li>
-            <li>
-              Developed strong fundamentals in science, setting the stage for my
-              tech journey.
-            </li>
+          <ul className="mt-4 grid grid-cols-3 gap-3">
+            {COLLEGE_STATS.map((stat) => (
+              <li key={stat.label} className="rounded-lg bg-white p-3 text-center shadow">
+                <p className="text-2xl font-bold text-[#2b2b2b]">{stat.value}</p>
+                <p className="text-xs text-gray-600">{stat.label}</p>
+              </li>
+            ))}
           </ul>
 
-          <div className="mt-4">
-            <Image
-              src="/school2.webp"
-              alt="Doon Valley International School building"
-              width={500}
-              height={300}
-              sizes="(max-width: 768px) 100vw, 500px"
-              className="rounded-md shadow-md"
-            />
-          </div>
-        </motion.div>
-
-        {/* Montessori */}
-        <motion.div
-          whileHover={cardHover}
-          initial={{ rotate: -2 }}
-          transition={cardTransition}
-          className="bg-[#fffbea] p-6 rounded-lg shadow-lg max-w-3xl mx-auto relative"
-        >
-          {/* Tape */}
-          <span
-            className="absolute -top-4 left-6 w-16 h-6 bg-pink-200 rotate-[-6deg] opacity-70"
-            aria-hidden="true"
-          />
-
-          <h3 className="text-2xl font-bold">
-            The Montessori School, Dehradun
-          </h3>
-          <p className="text-gray-600">I.C.S.E - Science</p>
-          <p className="text-sm text-gray-500">Percentage: 95.40%</p>
-
-          <ul className="list-disc list-inside mt-3 text-gray-700 leading-relaxed">
-            <li>
-              Awarded{" "}
-              <span className="font-semibold">All Rounder of the Year</span>{" "}
-              (Miss ICSE).
-            </li>
-            <li>
-              One of my poems was published in{" "}
-              <span className="italic">The Times of India</span>.
-            </li>
-            <li>
-              Passionate about debates — never won one, but made sure the
-              audience had fun listening.
-            </li>
-            <li>
-              This is where I learned the basics of coding and programming using
-              Java.
-            </li>
+          <ul className="mt-4 flex flex-wrap gap-2">
+            {COLLEGE_HIGHLIGHTS.map((h) => (
+              <li
+                key={h}
+                className="rounded-full bg-yellow-100 px-3 py-1 text-sm text-gray-800"
+              >
+                {h}
+              </li>
+            ))}
           </ul>
+        </div>
+      </motion.article>
 
-          <div className="mt-4">
-            <Image
-              src="/montessori.avif"
-              alt="The Montessori School, Dehradun"
-              width={500}
-              height={300}
-              sizes="(max-width: 768px) 100vw, 500px"
-              className="rounded-md shadow-md"
+      {/* School: earlier chapters, kept compact */}
+      <h3 className="mt-14 text-3xl font-handwritten font-bold text-center text-[#2b2b2b]">
+        Earlier chapters
+      </h3>
+      <div className="mt-6 max-w-5xl mx-auto grid gap-6 md:grid-cols-2">
+        {SCHOOLS.map((school, i) => (
+          <motion.article
+            key={school.name}
+            whileHover={cardHover}
+            initial={{ rotate: i % 2 === 0 ? 1.5 : -1.5 }}
+            transition={cardTransition}
+            className="relative flex gap-4 rounded-lg bg-white p-4 shadow-lg"
+          >
+            <span
+              className={`absolute -top-3 right-6 h-5 w-14 ${school.tape} rotate-[5deg] opacity-80`}
+              aria-hidden="true"
             />
-          </div>
-        </motion.div>
+            <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-md">
+              <Image
+                src={school.image}
+                alt={school.name}
+                fill
+                sizes="96px"
+                className="object-cover"
+              />
+            </div>
+            <div>
+              <h4 className="font-bold text-[#2b2b2b] leading-tight">{school.name}</h4>
+              <p className="text-sm text-gray-600">{school.board}</p>
+              <p className="mt-1 text-2xl font-bold text-[#b45309]">{school.score}</p>
+              <p className="text-sm text-gray-700">{school.note}</p>
+            </div>
+          </motion.article>
+        ))}
       </div>
     </motion.section>
   );

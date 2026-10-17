@@ -136,29 +136,6 @@ body {
   background-size: 100% 2.5rem;
 }
 
-/* Scattered "ethics" notes.
-   These were positioned from JS: an `isMobile` state fed by an unthrottled
-   resize listener, which re-rendered the whole section on every resize event
-   and rendered the desktop layout on the server before correcting it on the
-   client. Both position sets now ship as custom properties and the media query
-   picks one — no state, no listener, no post-hydration shift.
-   Any side left unset resolves to `auto`, which is what we want. */
-.ethic-note {
-  top: var(--n-top);
-  right: var(--n-right);
-  bottom: var(--n-bottom);
-  left: var(--n-left);
-}
-
-@media (max-width: 639px) {
-  .ethic-note {
-    top: var(--m-top);
-    right: var(--m-right);
-    bottom: var(--m-bottom);
-    left: var(--m-left);
-  }
-}
-
 @layer components {
   .section-divider-dashed {
     border-top: 3px dashed #4b5563;

@@ -3,131 +3,182 @@
 import React from "react";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
-const experiences = [
+
+type Experience = {
+  title: string;
+  company: string;
+  domain: string;
+  location: string;
+  duration: string;
+  accent: string;
+  // Big numbers shown on the card; the first thing a recruiter reads.
+  impact: { value: string; label: string }[];
+  tech: string[];
+  // `**text**` is rendered as a highlighter mark.
+  details: string[];
+};
+
+const experiences: Experience[] = [
   {
     title: "Software Development Intern",
     company: "SiteGuide",
+    domain: "Trading, edtech, legal-tech & B2B SaaS",
     location: "Remote",
     duration: "July 2025 – Aug 2026",
+    accent: "#f9a8d4",
+    impact: [
+      { value: "5+", label: "production apps shipped" },
+      { value: "~50K", label: "users on the trading platform" },
+      { value: "1", label: "agentic voice agent (Jarvis)" },
+    ],
     tech: ["LiveKit", "LangChain", "Pinecone", "Redis", "Node.js", "Spring Boot", "PostgreSQL", "Next.js", "React Native"],
     details: [
-      "Built Jarvis, a RAG-based agentic voice agent spanning the full software ecosystem of a trading and content platform, with tool-calling, LLM integrations and custom model endpoints for real-time conversations.",
-      "Added backend features to a trading platform serving ~50K users, and engineered a Udemy-style edtech platform with live courses and Mux video streaming.",
-      "Shipped 5+ production full-stack apps (web & mobile; legal-tech, e-commerce, B2B SaaS), owning design through deployment, testing and code review.",
+      "Built **Jarvis, a RAG-based agentic voice agent** spanning a trading and content platform's whole ecosystem, with tool-calling, LLM integrations and custom model endpoints for real-time conversations.",
+      "Added backend features to a **trading platform serving ~50K users**, and engineered a Udemy-style edtech platform with live courses and Mux video streaming.",
+      "Shipped **5+ production full-stack apps** (web & mobile; legal-tech, e-commerce, B2B SaaS), owning design through deployment, testing and code review.",
       "Automated lead capture and WhatsApp/email follow-ups with Pabbly and SendFox, with Google Sheets analytics.",
     ],
-    highlight: "Shipped 5+ production apps and an agentic voice agent.",
   },
   {
     title: "Software Development Intern",
     company: "BetterMyStay",
+    domain: "Hospitality booking",
     location: "Remote",
-    duration: "April 2024 – August 2024",
+    duration: "Apr 2024 – Aug 2024",
+    accent: "#93c5fd",
+    impact: [
+      { value: "End-to-end", label: "Cashfree payments in React Native" },
+      { value: "Plug & play", label: "payment module for other developers" },
+    ],
     tech: ["React Native", "React", "Cashfree", "Figma"],
     details: [
-      "Built a React Native CLI module integrating the Cashfree payment gateway end-to-end (transaction flow, error handling, callbacks), delivering plug-and-play payments and cutting developer onboarding time.",
-      "Defined API contracts with the backend team for transaction-status callbacks, ensuring reliable handling of payment success and failure across the client.",
-      "Designed subscription and media UIs in Figma and shipped a responsive React landing page, improving accessibility and page load time.",
+      "Built a React Native CLI module integrating the **Cashfree payment gateway end-to-end** (transaction flow, error handling, callbacks), cutting developer onboarding time.",
+      "Defined API contracts with the backend team for transaction-status callbacks, so payment success and failure were handled reliably.",
+      "Designed subscription and media UIs in Figma and shipped a **responsive React landing page**, improving accessibility and load time.",
     ],
-    highlight: "Plug-and-play payment integration in React Native.",
   },
   {
     title: "Software Development Intern",
     company: "FuelCab India",
+    domain: "Mobility",
     location: "Remote",
     duration: "Oct 2023 – Jan 2024",
+    accent: "#fde047",
+    impact: [{ value: "15%", label: "faster releases" }],
     tech: ["React.js", "Tailwind CSS"],
     details: [
-      "Built React.js/Tailwind CSS web solutions focused on maintainability and customer experience; streamlined delivery workflows, cutting release time by 15%.",
+      "Built React.js/Tailwind CSS web solutions focused on maintainability and customer experience; streamlined delivery workflows, **cutting release time by 15%**.",
     ],
-    highlight: "Cut release time by 15%.",
   },
 ];
 
+function Highlighted({ text }: { text: string }) {
+  return (
+    <>
+      {text.split(/\*\*(.+?)\*\*/).map((part, i) =>
+        i % 2 === 1 ? (
+          <mark key={i} className="bg-yellow-200 px-1 rounded-sm font-semibold text-[#2b2b2b]">
+            {part}
+          </mark>
+        ) : (
+          <React.Fragment key={i}>{part}</React.Fragment>
+        )
+      )}
+    </>
+  );
+}
+
 const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 50, rotate: -1 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    rotate: 0,
-    transition: { duration: 0.6, ease: "easeOut" },
-  },
+  hidden: { opacity: 0, x: 40 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } },
 };
-
-const techTagVariants = {
-  hover: { scale: 1.05, rotate: 2 },
-};
-
-// Hoisted so the ~9 tech tags don't each get a fresh object every render.
-const techTagTransition = { type: "spring", stiffness: 300 } as const;
 
 export default function Experience() {
   return (
-    <section id="experience" className="scroll-mt-16 notebook-lines px-4 sm:px-8 py-16 w-full bg-[url('/paper-texture3.webp')] bg-cover bg-repeat relative z-10 ">
-      <h2 className="text-4xl font-marker5 font-bold text-center text-[#2b2b2b] mb-12 text-shadow-note mt-16">
-        Work Experience :
+    <section
+      id="experience"
+      className="scroll-mt-16 notebook-lines px-4 sm:px-8 py-16 w-full bg-[url('/paper-texture3.webp')] bg-cover bg-repeat relative z-10"
+    >
+      <h2 className="text-5xl font-handwritten font-bold text-center text-[#2b2b2b]">
+        Where I&apos;ve worked
       </h2>
+      <p className="mt-2 text-center text-gray-700">
+        3 internships · web, mobile &amp; AI, all shipped to real users
+      </p>
 
-      <div className="max-w-4xl mx-auto space-y-12">
-        {/*
-          A backdrop blur was removed from these cards. It makes the compositor
-          re-sample and blur everything behind each card on every scroll frame,
-          and behind an 80%-opaque white fill only about a fifth of that blurred
-          backdrop was ever visible — a near-invisible effect paid for with a
-          per-frame backdrop pass directly on the scroll path.
-
-          (Deliberately not naming the utility class here: Tailwind scans source
-          files for bare strings, so writing it in a comment is enough to
-          regenerate the dead rule in the stylesheet.)
-        */}
+      {/* Timeline: a vertical line with one dot per role. */}
+      <ol className="relative mt-12 max-w-4xl mx-auto border-l-4 border-dashed border-[#2b2b2b]/30 pl-6 sm:pl-10 space-y-12">
         {experiences.map((exp) => (
-          <motion.div
+          <motion.li
             key={exp.company}
             variants={cardVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            className="p-6 bg-white/80 shadow-md rounded-lg transform relative torn-edge-card"
+            viewport={{ once: true, amount: 0.2 }}
+            className="relative"
           >
-            {/* Highlight Quote Bubble */}
-            <div className="absolute  -top-10 md:-top-5 lg:-top-4 right-1  md:right-4 p-3 bg-yellow-100 rounded-full shadow-md transform rotate-3 text-xs font-marker3 text-[#2b2b2b] max-w-xs text-center">
-              &quot;{exp.highlight}&quot;
-            </div>
+            <span
+              className="absolute -left-[38px] sm:-left-[54px] top-6 h-6 w-6 rounded-full border-4 border-[#fdf6e3] shadow"
+              style={{ background: exp.accent }}
+              aria-hidden="true"
+            />
 
-            <h3 className="text-2xl font-handwritten font-bold text-[#2b2b2b]">
-              {exp.title}
-            </h3>
-            <p className="text-gray-700 font-semibold">
-              {exp.company} — {exp.location}
-            </p>
-            <p className="text-sm text-gray-500 italic">{exp.duration}</p>
+            <article className="overflow-hidden rounded-xl bg-white shadow-lg">
+              <header
+                className="flex flex-wrap items-start justify-between gap-3 px-6 py-4"
+                style={{ background: exp.accent }}
+              >
+                <div>
+                  <h3 className="text-2xl font-bold text-[#2b2b2b]">{exp.company}</h3>
+                  <p className="text-sm font-semibold text-[#2b2b2b]/80">
+                    {exp.title} · {exp.domain}
+                  </p>
+                </div>
+                <p className="rounded-full bg-white/80 px-3 py-1 text-sm font-semibold text-[#2b2b2b]">
+                  {exp.duration} · {exp.location}
+                </p>
+              </header>
 
-            {/* Tech Stack Tags */}
-            <div className="mt-4 flex flex-wrap gap-2">
-              {exp.tech.map((tech) => (
-                <motion.span
-                  key={tech}
-                  className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700 font-medium transform rotate-1"
-                  variants={techTagVariants}
-                  whileHover="hover"
-                  transition={techTagTransition}
-                >
-                  {tech}
-                </motion.span>
-              ))}
-            </div>
+              <div className="p-6">
+                <ul className="grid gap-3 sm:grid-cols-3">
+                  {exp.impact.map((item) => (
+                    <li
+                      key={item.label}
+                      className="rounded-lg border-2 border-dashed p-3"
+                      style={{ borderColor: exp.accent }}
+                    >
+                      <p className="text-2xl font-bold text-[#b45309]">{item.value}</p>
+                      <p className="text-sm text-gray-700 leading-snug">{item.label}</p>
+                    </li>
+                  ))}
+                </ul>
 
-            {/* Details List */}
-            <ul className="mt-4 list-disc list-inside text-gray-700 space-y-2">
-              {exp.details.map((point) => (
-                <li key={point} className="leading-relaxed">
-                  {point}
-                </li>
-              ))}
-            </ul>
-          </motion.div>
+                <ul className="mt-5 space-y-2 text-gray-700 leading-relaxed">
+                  {exp.details.map((point) => (
+                    <li key={point} className="flex gap-2">
+                      <span className="text-[#b45309]" aria-hidden="true">▸</span>
+                      <span>
+                        <Highlighted text={point} />
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+
+                <ul className="mt-5 flex flex-wrap gap-2" aria-label="Tech used">
+                  {exp.tech.map((t) => (
+                    <li
+                      key={t}
+                      className="rounded bg-gray-100 px-2 py-1 font-mono text-xs text-gray-700"
+                    >
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </article>
+          </motion.li>
         ))}
-      </div>
+      </ol>
     </section>
   );
 }
