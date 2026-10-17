@@ -183,7 +183,7 @@ const Hero = () => {
           {/* Profile Image - Sticky Note Style */}
           <div className="anim-sticky-wobble relative p-4 bg-yellow-200 rounded-lg shadow-lg shrink-0">
             <Image
-              src="/Me.webp"
+              src="/me-hero.webp"
               alt="Portrait of Rachita Pant"
               width={180}
               height={180}

@@ -111,7 +111,7 @@ const AboutMe = () => {
         <motion.div {...fadeUp} className="grid items-center gap-10 md:grid-cols-[auto_1fr]">
           <div className="anim-photo-wobble relative mx-auto bg-white p-3 pb-10 shadow-xl">
             <Image
-              src="/Me2.webp"
+              src="/me-about.webp"
               alt="Rachita Pant"
               width={240}
               height={180}
