@@ -29,7 +29,7 @@ export default function Intro() {
   });
 
   return (
-    <section className="notebook-lines relative py-16 px-6 bg-[url('/paper-texture3.webp')] torn-edge bg-cover w-full mt-[-60] z-30 overflow-hidden">
+    <section id="about" className="scroll-mt-16 notebook-lines relative py-16 px-6 bg-[url('/paper-texture3.webp')] torn-edge bg-cover w-full z-30 overflow-hidden">
       <div className="section-divider-dashed w-full " />
 
       {/* Content wrapper */}
@@ -42,7 +42,7 @@ export default function Intro() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="text-3xl font-handwritten sm:text-5xl font-bold text-[#2b2b2b]"
         >
-          Let&apos;s get started with the intro ?
+          Rachita, the person
         </motion.h2>
 
         {/* Sticky note */}
@@ -53,8 +53,8 @@ export default function Intro() {
           transition={{ type: "spring", stiffness: 300, damping: 20 }}
         >
           <p className="font-[cursive] text-lg text-[#3a3a3a]">
-            “I turn coffee ☕ into code 💻… and bugs 🐛 into slightly more
-            confusing bugs.”
+            “I turn coffee ☕ into code 💻, and ideas into things people
+            actually use.”
           </p>
         </motion.div>
 
@@ -66,10 +66,7 @@ export default function Intro() {
           transition={{ delay: 0.2, duration: 0.6 }}
           className="mt-6 text-lg text-gray-700 leading-relaxed max-w-xl"
         >
-          Hey there! I’m Rachita — part-time coder, full-time anime enthusiast,
-          and occasional plant whisperer 🌿. My portfolio is basically a
-          scrapbook of cool things I’ve built, weird ideas I’ve tried, and a few
-          things I’ll pretend worked on the first try.
+          Hey there! I’m Rachita, a CS undergrad at G. B. Pant Institute of Engineering and Technology who loves building things end to end. Off the keyboard you’ll find me deep in anime, tending plants 🌿, or running workshops as a campus ambassador.
         </motion.p>
 
         {/* 3D Model */}

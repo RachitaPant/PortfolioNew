@@ -1,188 +1,281 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
-import { FaPaperclip } from "react-icons/fa";
-import { seededRotation } from "@/lib/rotation";
+import React, { useState } from "react";
+import Image from "next/image";
+import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
+
+type Category = "Fullstack" | "Multi-Agent" | "Generative AI" | "ML";
 
 type ProjectItem = {
   title: string;
+  category: Category;
+  featured?: boolean;
   duration: string;
-  location: string;
-  tech: string;
+  // One plain-language line a recruiter can read in five seconds.
+  outcome: string;
+  tech: string[];
   details: string[];
-  link: string;
+  image?: string;
+  // Shown in place of a screenshot when there is none yet.
+  diagram?: string[];
+  live?: string;
+  source?: string;
 };
 
-const fullstackProjects: ProjectItem[] = [
-  {
-    title: "ProofLoop Digital Approval System",
-    duration: "2026",
-    location: "",
-    tech: "Java | Spring Boot | Next.js | MongoDB | Docker",
-    details: [
-      "Built a workflow-based approval platform replacing email approvals with role-based actions, configurable multi-stage workflows, and full audit history, backed by a Spring Boot REST API and Next.js frontend.",
-      "Containerized the backend with Docker and deployed backend/frontend independently (Render, Vercel) — end-to-end deployment and DevOps ownership.",
-    ],
-    link: "https://github.com/RachitaPant",
-  },
-  {
-    title: "Web Performance Resource Analyzer",
-    duration: "2025",
-    location: "",
-    tech: "Next.js | Lighthouse | Puppeteer | GCP",
-    details: [
-      "Built a performance-auditing tool on GCP measuring Core Web Vitals (LCP, FID, CLS) and resource usage via Lighthouse/Puppeteer in a stable Chrome environment.",
-      "Visualized results in Chart.js for reliable, repeatable audits at scale.",
-    ],
-    link: "https://github.com/RachitaPant/Web-Performance-Analyzer",
-  },
-  {
-    title: "Gramodyan",
-    duration: "2026",
-    location: "",
-    tech: "React | Vite | React Router | QR Code | Vercel",
-    details: [
-      "Ideathon prototype of a marketplace for a village incubation centre in Pauri Garhwal: producers (SHGs, farmers) list products and buyers discover and order them.",
-      "Each product batch carries a QR code linking to a public verification page, with a 4-step seller onboarding flow and dashboard.",
-    ],
-    link: "https://gramodyan.vercel.app/",
-  },
-];
-
-const multiAgentProjects: ProjectItem[] = [
+const projects: ProjectItem[] = [
   {
     title: "Lean Agents",
+    category: "Multi-Agent",
+    featured: true,
     duration: "2026",
-    location: "",
-    tech: "Python | smolagents | Next.js | Upstash Redis | Groq | Gemini",
+    outcome:
+      "Tool-using AI agents that finish the same tasks on fewer tokens, measured on the BFCL benchmark.",
+    tech: ["Python", "smolagents", "Next.js", "Upstash Redis", "Groq", "Gemini"],
     details: [
-      "Building reliable, token-efficient tool-using agents on free-tier LLMs: top-k tool retrieval, schema validate-and-repair for tool calls, and plan caching across similar tasks.",
-      "Compares planner/executor/verifier agents against a single agent at equal token budget, with a quota-aware router failing over Groq → Gemini → GitHub Models, evaluated on the BFCL benchmark.",
+      "Top-k tool retrieval, schema validate-and-repair for tool calls, and plan caching across similar tasks.",
+      "Planner/executor/verifier agents vs. a single agent at equal token budget, with a quota-aware router failing over Groq → Gemini → GitHub Models.",
     ],
-    link: "https://github.com/RachitaPant/Lean-Agents",
+    image: "/projects/lean-agents.png",
+    live: "https://lean-agents-brown.vercel.app",
+    source: "https://github.com/RachitaPant/Lean-Agents",
   },
   {
     title: "Voice-Guided AI Tutor",
-    duration: "2025",
-    location: "",
-    tech: "Next.js | FastAPI | LiveKit | Tavus | Deepgram | OpenAI",
+    category: "Multi-Agent",
+    duration: "Oct 2025",
+    outcome:
+      "A real-time voice tutor with a talking AI avatar that explains design concepts.",
+    tech: ["Next.js", "FastAPI", "LiveKit", "Tavus", "Deepgram", "ElevenLabs", "OpenAI"],
     details: [
-      "Built a real-time voice-interactive tutoring system using LiveKit Agents and Tavus AI avatars, with an async FastAPI backend handling concurrent voice sessions.",
-      "Integrated Deepgram for speech-to-text, ElevenLabs for speech synthesis, and OpenAI for contextual response generation — a full end-to-end AI voice pipeline.",
+      "LiveKit Agents and Tavus avatars on an async FastAPI backend handling concurrent voice sessions.",
+      "End-to-end voice pipeline: Deepgram speech-to-text → OpenAI → ElevenLabs speech synthesis.",
     ],
-    link: "https://github.com/RachitaPant",
+    image: "/projects/voice-tutor.png",
+    source: "https://github.com/RachitaPant",
   },
-];
-
-const genAiProjects: ProjectItem[] = [];
-
-const mlProjects: ProjectItem[] = [
+  {
+    title: "ProofLoop",
+    category: "Fullstack",
+    featured: true,
+    duration: "Feb 2026",
+    outcome:
+      "Replaces email approvals with multi-stage workflows and a tamper-evident audit trail.",
+    tech: ["Java", "Spring Boot", "Next.js", "MongoDB", "Docker", "GitHub Actions"],
+    details: [
+      "Conditional routing, parallel stages, SLA escalation, delegation and a SHA-256 hash-chained audit trail.",
+      "Hardened auth (httpOnly sessions, rotating refresh tokens, CSRF, RBAC), fixed IDOR and privilege-escalation bugs; 60+ tests in CI.",
+    ],
+    image: "/projects/proofloop.png",
+    live: "https://proofloop-frontend.vercel.app/",
+    source: "https://github.com/RachitaPant/proofloop-backend",
+  },
+  {
+    title: "Gramodyan",
+    category: "Fullstack",
+    duration: "2026",
+    outcome:
+      "A marketplace helping village producers in Pauri Garhwal sell beyond their doorstep.",
+    tech: ["React", "Vite", "React Router", "QR codes", "Vercel"],
+    details: [
+      "Producers list products and buyers discover and order them, in English, Hindi and Garhwali.",
+      "Every batch carries a QR code that opens a public verification page.",
+    ],
+    image: "/projects/gramodyan.png",
+    live: "https://gramodyan.vercel.app/",
+  },
+  {
+    title: "SitePulse",
+    category: "Generative AI",
+    featured: true,
+    duration: "Mar 2025 – Present",
+    outcome:
+      "An AI web performance auditor that explains why a site is slow and how to fix it.",
+    tech: ["Next.js", "TypeScript", "Zod", "Groq LLMs", "GitHub Actions", "Vercel"],
+    details: [
+      "Merges Lighthouse 13, real-user Core Web Vitals and security grades into one validated report.",
+      "Provider-agnostic LLM layer with model fallback; its eval suite passes 24/24 checks with 100% grounding. A GitHub Actions gate audits every preview and posts AI-explained PR comments.",
+    ],
+    image: "/projects/sitepulse.png",
+    live: "https://hardware-resource-usage-analyzer.vercel.app/",
+    source: "https://github.com/RachitaPant/Web-Performance-Analyzer",
+  },
   {
     title: "Hybrid AI-NWP Forecast Blending",
+    category: "ML",
+    featured: true,
     duration: "2026",
-    location: "",
-    tech: "Python | Convex Optimization | Ensemble Forecasting",
+    outcome:
+      "Blends AI and numerical weather models to forecast extreme rainfall more reliably.",
+    tech: ["Python", "Convex Optimization", "Ensemble Forecasting"],
     details: [
-      "Built an extremity-conditioned ensemble that blends AI and numerical weather prediction models, with weights trained by convex optimization on a tail objective (threshold-weighted CRPS for heavy rain ≥64.5 mm/24h).",
-      "Used hierarchical spatial pooling (36 subdivisions → 5 regions → national) to learn stable weights despite sparse extreme-rainfall events.",
+      "Weights trained by convex optimization on a tail objective (threshold-weighted CRPS for heavy rain ≥64.5 mm/24h).",
+      "Hierarchical spatial pooling learns stable weights despite sparse extreme events.",
     ],
-    link: "https://github.com/RachitaPant/Hybrid-AI-NWP-Multi-Model-Forecast-Blending-System",
+    diagram: ["36 subdivisions", "5 regions", "India"],
+    source:
+      "https://github.com/RachitaPant/Hybrid-AI-NWP-Multi-Model-Forecast-Blending-System",
   },
 ];
 
-// Sections with no projects yet are skipped when rendering.
-const sections = [
-  { title: "Fullstack Showcase", projects: fullstackProjects },
-  { title: "Multi-Agent Showcase", projects: multiAgentProjects },
-  { title: "Generative AI Showcase", projects: genAiProjects },
-  { title: "ML Showcase", projects: mlProjects },
+const FILTERS: ("All" | Category)[] = [
+  "All",
+  "Fullstack",
+  "Multi-Agent",
+  "Generative AI",
+  "ML",
 ];
 
-const pinVariants = {
-  hover: { scale: 1.05, rotate: 2 },
-  tap: { scale: 0.95, rotate: 0 },
-};
+function Visual({ project }: { project: ProjectItem }) {
+  if (project.image) {
+    return (
+      <div className="relative aspect-[16/9] w-full overflow-hidden bg-gray-100 border-b border-gray-200">
+        <Image
+          src={project.image}
+          alt={`Screenshot of ${project.title}`}
+          fill
+          sizes="(min-width: 768px) 560px, 100vw"
+          className="object-cover object-top"
+        />
+      </div>
+    );
+  }
+  if (project.diagram) {
+    return (
+      <div
+        className="flex aspect-[16/9] w-full flex-wrap items-center justify-center gap-2 bg-[#2e4a3b] p-4 text-white"
+        role="img"
+        aria-label={`Diagram: ${project.diagram.join(" to ")}`}
+      >
+        {project.diagram.map((step, i) => (
+          <React.Fragment key={step}>
+            {i > 0 && <span aria-hidden="true">→</span>}
+            <span className="rounded-md border border-white/40 bg-white/10 px-3 py-2 text-center text-sm font-semibold">
+              {step}
+            </span>
+          </React.Fragment>
+        ))}
+      </div>
+    );
+  }
+  return null;
+}
 
-const pinTransition = { type: "spring", stiffness: 250, damping: 20 } as const;
+function ProjectCard({ project }: { project: ProjectItem }) {
+  return (
+    <article className="flex h-full flex-col overflow-hidden rounded-lg bg-[#fffbea] shadow-lg">
+      <Visual project={project} />
+      <div className="flex flex-1 flex-col p-5">
+        <div className="flex flex-wrap items-center gap-2 text-xs font-semibold">
+          <span className="rounded-full bg-[#2b2b2b] px-3 py-1 text-white">
+            {project.category}
+          </span>
+          {project.featured && (
+            <span className="rounded-full bg-yellow-300 px-3 py-1 text-[#2b2b2b]">
+              ★ Featured
+            </span>
+          )}
+          <span className="text-gray-600">{project.duration}</span>
+        </div>
+
+        <h3 className="mt-3 text-2xl font-bold text-[#2b2b2b]">{project.title}</h3>
+        <p className="mt-1 text-gray-800 font-medium">{project.outcome}</p>
+
+        <ul className="mt-3 list-disc list-inside text-sm text-gray-700 space-y-1 leading-snug">
+          {project.details.map((point) => (
+            <li key={point}>{point}</li>
+          ))}
+        </ul>
+
+        <ul className="mt-4 flex flex-wrap gap-2" aria-label="Tech stack">
+          {project.tech.map((t) => (
+            <li
+              key={t}
+              className="rounded bg-white px-2 py-1 font-mono text-xs text-gray-700 border border-gray-200"
+            >
+              {t}
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-auto flex flex-wrap gap-3 pt-5 text-sm font-semibold">
+          {project.live && (
+            <a
+              href={project.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${project.title} live demo`}
+              className="inline-flex items-center gap-2 rounded-md bg-[#2b2b2b] px-4 py-2 text-white hover:bg-black"
+            >
+              <FaExternalLinkAlt aria-hidden="true" /> Live demo
+            </a>
+          )}
+          {project.source && (
+            <a
+              href={project.source}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${project.title} source code on GitHub`}
+              className="inline-flex items-center gap-2 rounded-md border-2 border-[#2b2b2b] px-4 py-2 text-[#2b2b2b] hover:bg-white"
+            >
+              <FaGithub aria-hidden="true" /> Source
+            </a>
+          )}
+        </div>
+      </div>
+    </article>
+  );
+}
 
 const Project = () => {
+  const [filter, setFilter] = useState<(typeof FILTERS)[number]>("All");
+  const shown = projects.filter(
+    (p) => filter === "All" || p.category === filter
+  );
+
   return (
-    <motion.section
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true, amount: 0.15 }}
-      transition={{ duration: 0.8 }}
-      className="px-8 py-16 bg-[url('/workstation.webp')] bg-cover w-full min-h-screen"
+    <section
+      id="work"
+      aria-labelledby="work-heading"
+      className="scroll-mt-16 px-4 sm:px-8 py-16 bg-[url('/workstation.webp')] bg-cover w-full"
     >
-      <h2 className="text-4xl font-[cursive] font-bold text-center text-[#fff] mb-12 select-none">
-        My Pinboard 📌
+      <h2
+        id="work-heading"
+        className="text-5xl font-handwritten font-bold text-center text-white"
+      >
+        What I build
       </h2>
+      <p className="mt-2 text-center text-white/90">
+        Full-stack products, multi-agent systems, generative AI and ML.
+      </p>
 
-      <div className="space-y-16">
-        {sections
-          .filter((section) => section.projects.length > 0)
-          .map((section) => (
-            <div key={section.title}>
-              <h3 className="text-2xl font-[cursive] font-bold text-center text-[#fff] mb-8 select-none">
-                {section.title}
-              </h3>
-              <div className="flex flex-wrap justify-center gap-10 max-w-6xl mx-auto">
-                {section.projects.map((project, i) => (
-                  <a
-                    key={project.title}
-                    href={project.link || "#"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`${project.title} — open the source on GitHub`}
-                    className="rounded-lg"
-                  >
-                    <motion.div
-                      className="relative bg-yellow-50 rounded-lg shadow-lg w-80 p-6 cursor-pointer select-text"
-                      style={{
-                        // Was `Math.random()`, recomputed on every render and different
-                        // between server and client. Stable per project now.
-                        rotate: `${seededRotation(i, 6)}deg`,
-                      }}
-                      whileHover="hover"
-                      whileTap="tap"
-                      variants={pinVariants}
-                      transition={pinTransition}
-                    >
-                      {/* Paperclip icon top-left */}
-                      <FaPaperclip
-                        className="absolute top-3 left-3 text-yellow-400 text-xl rotate-[-15deg] drop-shadow-md"
-                        aria-hidden="true"
-                      />
-
-                      <h3 className="text-xl font-bold mb-1">{project.title}</h3>
-                      <p className="text-sm text-gray-600 italic mb-3">
-                        {project.duration}{" "}
-                        {project.location && `| ${project.location}`}
-                      </p>
-                      <p className="text-sm text-gray-700 mb-3 font-mono">
-                        {project.tech}
-                      </p>
-
-                      <ul className="list-disc list-inside text-gray-700 space-y-1 text-sm leading-snug">
-                        {project.details.map((point) => (
-                          <li key={point}>{point}</li>
-                        ))}
-                      </ul>
-
-                      {/* Fake tape on bottom right */}
-                      <div
-                        className="absolute bottom-2 right-3 w-12 h-4 bg-yellow-300 rounded rotate-[-12deg] shadow-inner"
-                        aria-hidden="true"
-                      />
-                    </motion.div>
-                  </a>
-                ))}
-              </div>
-            </div>
-          ))}
+      <div
+        role="group"
+        aria-label="Filter projects by category"
+        className="mt-8 flex flex-wrap justify-center gap-2"
+      >
+        {FILTERS.map((f) => (
+          <button
+            key={f}
+            type="button"
+            onClick={() => setFilter(f)}
+            aria-pressed={filter === f}
+            className={`rounded-full px-4 py-2 text-sm font-semibold shadow ${
+              filter === f
+                ? "bg-yellow-300 text-[#2b2b2b]"
+                : "bg-white/90 text-gray-700 hover:bg-white"
+            }`}
+          >
+            {f}
+          </button>
+        ))}
       </div>
-    </motion.section>
+
+      <div className="mt-10 grid max-w-6xl mx-auto gap-8 md:grid-cols-2">
+        {shown.map((project) => (
+          <ProjectCard key={project.title} project={project} />
+        ))}
+      </div>
+    </section>
   );
 };
 

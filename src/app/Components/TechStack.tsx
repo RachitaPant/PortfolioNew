@@ -6,6 +6,19 @@ import { seededRotation } from "@/lib/rotation";
 
 const categories = [
   {
+    title: "AI / GenAI",
+    skills: [
+      "Agentic workflows",
+      "Tool-calling",
+      "LangChain",
+      "RAG",
+      "Pinecone",
+      "LiveKit Agents",
+      "Custom model endpoints",
+      "LLM evals",
+    ],
+  },
+  {
     title: "Languages",
     skills: [
       "C++",
@@ -45,7 +58,7 @@ const categories = [
   },
   {
     title: "Backend & Systems",
-    skills: ["PostgreSQL", "MongoDB", "Redis", "REST API design", "Docker", "GCP"],
+    skills: ["PostgreSQL", "MongoDB", "Redis", "REST API design", "Docker", "GCP", "Vercel", "GitHub Actions CI/CD"],
   },
   {
     title: "Tools & Platforms",
@@ -59,7 +72,9 @@ const categories = [
       "Expo EAS",
       "Postman",
       "Intellij Idea",
-      "ChatGPT",
+      "Cursor",
+      "Claude Code",
+      "GitHub Copilot",
     ],
   },
   {
@@ -81,6 +96,7 @@ const skillTransition = { type: "spring", stiffness: 300, damping: 15 } as const
 const TechStack = () => {
   return (
     <motion.section
+      id="skills"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, amount: 0.15 }}

@@ -86,8 +86,8 @@ const fontVariables = [
 ].join(" ");
 
 export const metadata: Metadata = {
-  title: "Rachita's Portfolio",
-  description: "A notebook-style portfolio showcasing my career journey.",
+  title: "Rachita Pant · Full-stack & AI Engineer",
+  description: "Rachita Pant builds production web apps and reliable AI agents: full-stack, multi-agent, generative AI and ML projects.",
 };
 
 export const viewport: Viewport = {
@@ -96,7 +96,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={fontVariables}>
+    <html lang="en" className={`${fontVariables} scroll-smooth`}>
       <body className="paper-body w-full">{children}</body>
     </html>
   );

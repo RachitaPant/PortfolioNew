@@ -15,7 +15,7 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#fdf6e3] border-t border-gray-300 py-8  w-full">
+    <footer id="contact" className="scroll-mt-16 bg-[#fdf6e3] border-t border-gray-300 py-8  w-full">
       <div className="flex flex-col items-center space-y-4">
         {/* Heading */}
         <h2 className="relative text-2xl font-handwritten text-gray-800">

@@ -17,7 +17,7 @@ const Education = () => {
       // crossed the viewport, so scrolling back up re-animated the whole page.
       viewport={{ once: true, amount: 0.15 }}
       transition={{ duration: 0.8 }}
-      className="px-8 py-16   mx-auto bg-[url('/paper-bg2.webp')] bg-cover w-full torn-edge mt-[-130] z-20"
+      className="px-8 py-16   mx-auto bg-[url('/paper-bg2.webp')] bg-cover w-full torn-edge z-20"
     >
       {/* Divider: Dashed Line */}
       <div className="section-divider-dashed w-full max-w-5xl" />

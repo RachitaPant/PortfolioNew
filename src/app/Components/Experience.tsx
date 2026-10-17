@@ -8,43 +8,39 @@ const experiences = [
     title: "Software Development Intern",
     company: "SiteGuide",
     location: "Remote",
-    duration: "July 2025 – Present",
-    tech: ["Node.js", "Express", "Spring Boot", "PostgreSQL", "Next.js", "React Native"],
+    duration: "July 2025 – Aug 2026",
+    tech: ["LiveKit", "LangChain", "Pinecone", "Redis", "Node.js", "Spring Boot", "PostgreSQL", "Next.js", "React Native"],
     details: [
-      "Shipped 5+ production full-stack applications (web & mobile) across edtech, legal-tech, e-commerce, and B2B SaaS — owning design through deployment, writing tests, and participating in code review with senior engineers.",
-      "Built a Udemy-style edtech platform (live courses, Mux video, instructor/admin dashboards), a legal-tech platform with multi-role lawyer/claimant workflows, and a B2B SaaS director-appointment and due-diligence system.",
-      "Implemented SEO-optimized e-commerce with SSR and ISR in Next.js; built a RAG-based AI voice agent (LiveKit, LangChain, Pinecone, Redis); contributed backend features to a trading/analytics platform serving 50K users.",
-      "Built an end-to-end lead-management automation system: custom Pabbly Chatflow bots for WhatsApp/email capture, Pabbly Connect workflows for multi-step follow-ups, and SendFox campaigns, with activity piped into Google Sheets for real-time analytics.",
+      "Built Jarvis, a RAG-based agentic voice agent spanning the full software ecosystem of a trading and content platform, with tool-calling, LLM integrations and custom model endpoints for real-time conversations.",
+      "Added backend features to a trading platform serving ~50K users, and engineered a Udemy-style edtech platform with live courses and Mux video streaming.",
+      "Shipped 5+ production full-stack apps (web & mobile; legal-tech, e-commerce, B2B SaaS), owning design through deployment, testing and code review.",
+      "Automated lead capture and WhatsApp/email follow-ups with Pabbly and SendFox, with Google Sheets analytics.",
     ],
-    highlight:
-      "Shipped 5+ production full-stack apps across edtech, legal-tech, e-commerce, and B2B SaaS.",
+    highlight: "Shipped 5+ production apps and an agentic voice agent.",
   },
   {
     title: "Software Development Intern",
     company: "BetterMyStay",
     location: "Remote",
     duration: "April 2024 – August 2024",
-    tech: ["React", "React Native", "UI/UX - Figma"],
+    tech: ["React Native", "React", "Cashfree", "Figma"],
     details: [
-      "Integrated Cashfree payment gateway in React Native CLI application, overcoming limited documentation and tackling complex transaction flows.",
-      "Designed a subscription model workflow, focusing on streamlining onboarding and improving retention.",
-      "Proper payment gateway integration ensureing secure transactions and builing user trust.",
+      "Built a React Native CLI module integrating the Cashfree payment gateway end-to-end (transaction flow, error handling, callbacks), delivering plug-and-play payments and cutting developer onboarding time.",
+      "Defined API contracts with the backend team for transaction-status callbacks, ensuring reliable handling of payment success and failure across the client.",
+      "Designed subscription and media UIs in Figma and shipped a responsive React landing page, improving accessibility and page load time.",
     ],
-    highlight:
-      "Tackled Cashfree integration despite scarce documentation , learnt more about responsive development in web",
+    highlight: "Plug-and-play payment integration in React Native.",
   },
   {
-    title: "Frontend Intern",
+    title: "Software Development Intern",
     company: "FuelCab India",
     location: "Remote",
-    duration: " Oct 2023 - Jan 2024",
+    duration: "Oct 2023 – Jan 2024",
     tech: ["React.js", "Tailwind CSS"],
     details: [
-      "Enhanced app usability by implementing modern accessibility standards and best practices.",
-      "Optimized project workflows, reducing development time by 15% through better collaboration.",
+      "Built React.js/Tailwind CSS web solutions focused on maintainability and customer experience; streamlined delivery workflows, cutting release time by 15%.",
     ],
-    highlight:
-      "Reduced development time by 15% through workflow optimizations.",
+    highlight: "Cut release time by 15%.",
   },
 ];
 
@@ -67,7 +63,7 @@ const techTagTransition = { type: "spring", stiffness: 300 } as const;
 
 export default function Experience() {
   return (
-    <section className="notebook-lines px-4 sm:px-8 py-16 w-full bg-[url('/paper-texture3.webp')] bg-cover bg-repeat relative mt-[-100px] z-10 ">
+    <section id="experience" className="scroll-mt-16 notebook-lines px-4 sm:px-8 py-16 w-full bg-[url('/paper-texture3.webp')] bg-cover bg-repeat relative z-10 ">
       <h2 className="text-4xl font-marker5 font-bold text-center text-[#2b2b2b] mb-12 text-shadow-note mt-16">
         Work Experience :
       </h2>

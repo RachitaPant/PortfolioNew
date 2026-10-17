@@ -65,6 +65,7 @@ const Hero = () => {
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
+      id="top"
       className="notebook-lines relative flex flex-col items-center justify-center py-20 px-6 text-center bg-[#fdf6e3] w-full overflow-hidden torn-edge z-[40] mt-[-40]"
     >
       {/* Tetris board — decorative, CSS-only, hidden from assistive tech. */}
@@ -116,40 +117,66 @@ const Hero = () => {
         </div>
       ))}
 
-      {/* Title */}
-      <h1 className="relative font-handwritten text-5xl sm:text-6xl font-bold text-[#2b2b2b] z-10">
-        Career Journal ~ Rachita
-      </h1>
+      <div className="relative z-10 flex flex-col-reverse md:flex-row items-center gap-10 max-w-5xl">
+        <div className="text-center md:text-left">
+          <p className="inline-flex items-center gap-2 rounded-full bg-white/80 px-4 py-1 text-sm font-semibold text-gray-700 shadow">
+            <span className="h-2 w-2 rounded-full bg-green-500" aria-hidden="true" />
+            Open to SDE &amp; AI Engineer roles · 2026
+          </p>
 
-      {/* Subtitle */}
-      <p className="relative mt-4 text-lg sm:text-xl text-gray-700 max-w-xl z-10">
-        A notebook of my growth, projects, and ideas — where every page tells a
-        story.
-      </p>
+          <h1 className="mt-5 text-4xl sm:text-6xl font-bold text-[#2b2b2b] leading-tight">
+            Rachita Pant
+            <span className="block font-handwritten text-5xl sm:text-7xl text-[#b45309]">
+              Full-stack &amp; AI Engineer
+            </span>
+          </h1>
 
-      {/* Profile Image - Sticky Note Style */}
-      <div className="anim-sticky-wobble relative mt-10 p-4 bg-yellow-200 rounded-lg shadow-lg inline-block z-10">
-        <Image
-          src="/Me.webp"
-          alt="Portrait of Rachita Pant"
-          width={150}
-          height={150}
-          priority
-          sizes="150px"
-          className="rounded-md shadow-md"
-        />
-        <span
-          className="absolute top-2 left-2 w-4 h-4 bg-red-500 rounded-full shadow"
-          aria-hidden="true"
-        />
-      </div>
+          <p className="mt-5 text-lg sm:text-xl text-gray-700 max-w-xl">
+            I build production web apps and reliable AI agents, from Spring
+            Boot APIs to multi-agent LLM systems. 5+ apps shipped across
+            three internships.
+          </p>
 
-      {/* Scroll Hint */}
-      <div
-        className="anim-scroll-hint absolute bottom-6 text-gray-500 z-10"
-        aria-hidden="true"
-      >
-        ↓ Scroll to Explore
+          <div className="mt-8 flex flex-wrap justify-center md:justify-start gap-3">
+            <a
+              href="#work"
+              className="rounded-md bg-[#2b2b2b] px-6 py-3 font-semibold text-white shadow hover:bg-black"
+            >
+              View my work ↓
+            </a>
+            <a
+              href="/Rachita_Pant_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-md border-2 border-[#2b2b2b] bg-white/80 px-6 py-3 font-semibold text-[#2b2b2b] hover:bg-white"
+            >
+              Résumé (PDF)
+            </a>
+            <a
+              href="#contact"
+              className="rounded-md px-6 py-3 font-semibold text-[#2b2b2b] underline underline-offset-4"
+            >
+              Contact me
+            </a>
+          </div>
+        </div>
+
+        {/* Profile Image - Sticky Note Style */}
+        <div className="anim-sticky-wobble relative p-4 bg-yellow-200 rounded-lg shadow-lg shrink-0">
+          <Image
+            src="/Me.webp"
+            alt="Portrait of Rachita Pant"
+            width={180}
+            height={180}
+            priority
+            sizes="180px"
+            className="rounded-md shadow-md"
+          />
+          <span
+            className="absolute top-2 left-2 w-4 h-4 bg-red-500 rounded-full shadow"
+            aria-hidden="true"
+          />
+        </div>
       </div>
     </motion.section>
   );
