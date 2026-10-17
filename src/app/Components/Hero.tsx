@@ -59,6 +59,24 @@ const PLANES = [
   },
 ];
 
+// What the "Currently working on" panel shows.
+const NOW = [
+  {
+    title: "Lean Agents",
+    tag: "Multi-agent",
+    text: "Cutting the tokens tool-using agents burn on free-tier LLMs, proven on the BFCL benchmark. Next up: the evaluation harness.",
+    href: "https://lean-agents-brown.vercel.app",
+    linkLabel: "Try the live demo",
+  },
+  {
+    title: "ODAS",
+    tag: "Research",
+    text: "Making computer-use agents act reliably: detecting uncertain outcomes and preventing duplicate side effects. Building the test desktop and scenarios now.",
+    href: undefined,
+    linkLabel: "",
+  },
+];
+
 const Hero = () => {
   return (
     <motion.section
@@ -117,7 +135,7 @@ const Hero = () => {
         </div>
       ))}
 
-      <div className="relative z-10 flex flex-col-reverse md:flex-row items-center gap-10 max-w-5xl">
+      <div className="relative z-10 flex flex-col md:flex-row items-center gap-10 max-w-6xl">
         <div className="text-center md:text-left">
           <p className="inline-flex items-center gap-2 rounded-full bg-white/80 px-4 py-1 text-sm font-semibold text-gray-700 shadow">
             <span className="h-2 w-2 rounded-full bg-green-500" aria-hidden="true" />
@@ -161,21 +179,63 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Profile Image - Sticky Note Style */}
-        <div className="anim-sticky-wobble relative p-4 bg-yellow-200 rounded-lg shadow-lg shrink-0">
-          <Image
-            src="/Me.webp"
-            alt="Portrait of Rachita Pant"
-            width={180}
-            height={180}
-            priority
-            sizes="180px"
-            className="rounded-md shadow-md"
-          />
-          <span
-            className="absolute top-2 left-2 w-4 h-4 bg-red-500 rounded-full shadow"
-            aria-hidden="true"
-          />
+        <div className="flex flex-col items-center gap-6 shrink-0">
+          {/* Profile Image - Sticky Note Style */}
+          <div className="anim-sticky-wobble relative p-4 bg-yellow-200 rounded-lg shadow-lg shrink-0">
+            <Image
+              src="/Me.webp"
+              alt="Portrait of Rachita Pant"
+              width={180}
+              height={180}
+              priority
+              sizes="180px"
+              className="rounded-md shadow-md"
+            />
+            <span
+              className="absolute top-2 left-2 w-4 h-4 bg-red-500 rounded-full shadow"
+              aria-hidden="true"
+            />
+          </div>
+
+          {/* Currently building */}
+          <aside
+            aria-labelledby="now-heading"
+            className="w-full max-w-sm rounded-lg bg-white/90 p-5 text-left shadow-lg border-2 border-dashed border-[#2b2b2b]/30 rotate-1"
+          >
+            <h2
+              id="now-heading"
+              className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-600"
+            >
+              <span className="relative flex h-2.5 w-2.5" aria-hidden="true">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-500" />
+              </span>
+              Currently working on
+            </h2>
+            <ul className="mt-3 space-y-4">
+              {NOW.map((item) => (
+                <li key={item.title}>
+                  <p className="font-bold text-[#2b2b2b]">
+                    {item.title}
+                    <span className="ml-2 rounded-full bg-yellow-200 px-2 py-0.5 text-xs font-semibold">
+                      {item.tag}
+                    </span>
+                  </p>
+                  <p className="mt-1 text-sm text-gray-700 leading-snug">{item.text}</p>
+                  {item.href && (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-1 inline-block text-sm font-semibold text-[#b45309] underline underline-offset-2"
+                    >
+                      {item.linkLabel} →
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </aside>
         </div>
       </div>
     </motion.section>
